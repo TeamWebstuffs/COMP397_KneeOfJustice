@@ -7,15 +7,13 @@
 /// <reference path="../objects/scoreboard.ts" />
 /// <reference path="../objects/label.ts" />
 
-
-/// <reference path="../objects/falcon.ts" />
-
 module states {
 
     export class GamePlay {
         // Game Objects 
         public game: createjs.Container;
         public scoreboard: objects.ScoreBoard;
+        public plane: objects.Plane;
         public island: objects.Island
         public clouds: objects.Cloud[] = [];
         public ocean: objects.Ocean;
@@ -25,13 +23,10 @@ module states {
         public edgeHit2: objects.EdgeHit2;
         public ringBullet: objects.RingBullet;
 
-        public falcon: objects.Falcon;
-
         constructor() {
             // Instantiate Game Container
             this.game = new createjs.Container();
 
-            
 
             //Ocean object
             this.ocean = new objects.Ocean();
@@ -55,6 +50,11 @@ module states {
 
             this.ringBullet = new objects.RingBullet();
             this.game.addChild(this.ringBullet);
+
+            //Plane object
+            this.plane = new objects.Plane();
+            this.game.addChild(this.plane);
+
             
 
             //Cloud object
@@ -67,11 +67,6 @@ module states {
             // Instantiate Scoreboard
             this.scoreboard = new objects.ScoreBoard(this.game);
 
-            //Falcon Object
-            this.falcon = new objects.Falcon();
-            this.game.addChild(this.falcon);
-
-
             // Add Game Container to Stage
             stage.addChild(this.game);
         } // Constructor
@@ -82,7 +77,6 @@ module states {
         return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
         } //Distance Method
 
-        /*
         // CHECK COLLISION METHOD
         public checkCollision(collider: objects.GameObject) {
             if (this.scoreboard.active) {
@@ -106,11 +100,7 @@ module states {
         }
     } // checkCollision Method
 
-        */
-
         public update() {
-
-            
 
             this.ocean.update();
 
@@ -123,16 +113,16 @@ module states {
 
             this.ringBullet.update();
 
-            this.falcon.update();
+            this.plane.update();
 
 
             for (var cloud = 2; cloud >= 0; cloud--) {
                 this.clouds[cloud].update();
 
-                //this.checkCollision(this.clouds[cloud]);
+                this.checkCollision(this.clouds[cloud]);
             }
 
-            //this.checkCollision(this.island);
+            this.checkCollision(this.island);
 
 
             this.scoreboard.update();
@@ -156,10 +146,14 @@ module states {
             function handleClick(event) {
                 //console.log("Click Detected");
 
+<<<<<<< HEAD
                 //Start > Kick
                 if (falconState == "Start") {
                     gamePlay.falcon.gotoAndPlay("FalconKick");
                     falconState = "Kick";
+=======
+                gamePlay.plane.gotoAndPlay("FalconKick");
+>>>>>>> origin/master
 
                     clickDelay = 5;
                 }

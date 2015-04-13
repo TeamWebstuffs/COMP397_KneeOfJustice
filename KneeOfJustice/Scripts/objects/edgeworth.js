@@ -14,6 +14,7 @@ var objects;
             _super.call(this, assetLoader.getResult("edgeNeutral"));
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
+            createjs.Sound.play("hit", { loop: 1 });
             //Spawn Point
             this.x = 1190;
             this.y = 116;

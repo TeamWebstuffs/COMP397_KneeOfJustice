@@ -13,6 +13,7 @@ module states {
     // GAME OVER STATE CLASS
     export class GameOver {
         // Game Objects 
+        
         public game: createjs.Container;
         public ocean: objects.Ocean;
         public gameOverLabel: objects.Label;
@@ -27,6 +28,7 @@ module states {
             this.game = new createjs.Container();
 
             //Ocean object
+            
             this.ocean = new objects.Ocean();
             this.game.addChild(this.ocean);
 
@@ -38,15 +40,15 @@ module states {
             this.game.addChild(this.gameOverLabel);
 
             //Final Score Label
-            this.finalScoreLabel = new objects.Label(320, 120, ("FINAL SCORE: " + currentScore));
+            this.finalScoreLabel = new objects.Label(320, 120, ("Knee Attempts: " + currentScore));
             this.game.addChild(this.finalScoreLabel);
 
             //High Score Label
-            this.highScoreLabel = new objects.Label(320, 200,("HIGH SCORE: " + highScore));
+            this.highScoreLabel = new objects.Label(320, 200,("Knee Points: " + highScore));
             this.game.addChild(this.highScoreLabel);
 
             //Try Again Button
-            this.tryAgainButton = new objects.Button(320, 280, "tryAgainButton");
+            this.tryAgainButton = new objects.Button(320, 280, "startbutton");
             this.tryAgainButton.on("click", this.tryAgainClicked, this);
 
             this.game.addChild(this.tryAgainButton);
