@@ -19,7 +19,7 @@ var states;
             this.game.addChild(this.ocean);
             //Island object
             this.island = new objects.Island();
-            this.game.addChild(this.island);
+            //this.game.addChild(this.island);
             this.edgeNeutral = new objects.EdgeNeutral();
             this.game.addChild(this.edgeNeutral);
             this.edgePew = new objects.EdgePew();
@@ -32,7 +32,6 @@ var states;
             this.game.addChild(this.ringBullet);
             for (var cloud = 2; cloud >= 0; cloud--) {
                 this.clouds[cloud] = new objects.Cloud();
-                this.game.addChild(this.clouds[cloud]);
             }
             // Instantiate Scoreboard
             this.scoreboard = new objects.ScoreBoard(this.game);
@@ -97,14 +96,66 @@ var states;
                 currentState = constants.GAME_OVER_STATE;
                 stateChanged = true;
             }
-            canvas.addEventListener("click", handleClick);
+            //Handle all of the 'click' related stuff
+            stage.addEventListener("click", handleClick);
             function handleClick(event) {
-                console.log("CLICK IS HAPPEN!!");
-                //gamePlay.plane.gotoAndPlay("FalconKick");
-                if (!gamePlay.ringBullet.active) {
-                    gamePlay.ringBullet.x = 100;
-                    gamePlay.ringBullet.active = true;
+                //console.log("Click Detected");
+                //Start > Kick
+                if (falconState == "Start") {
+                    gamePlay.falcon.gotoAndPlay("FalconKick");
+                    falconState = "Kick";
+                    clickDelay = 5;
                 }
+                //Kick > Knee
+                if (falconState == "Kick" && clickDelay == 0) {
+                    gamePlay.falcon.gotoAndPlay("KickToKnee");
+                    falconState = "Knee";
+                    kneeDuration = 30;
+                    clickDelay = 70;
+                }
+            }
+            //The Cap'n is in motion
+            if (gamePlay.falcon.currentFrame == 11) {
+                gamePlay.falcon.active = true;
+                gamePlay.ringBullet.active = true;
+            }
+            //CD on Knee && Knee > Kick
+            if (kneeDuration > 0) {
+                kneeDuration--;
+            }
+            if (kneeDuration == 0 && falconState == "Knee") {
+                falconState = "Kick";
+                gamePlay.falcon.gotoAndPlay("KneeToKick");
+                kneeDuration = -1;
+            }
+            if (kneeDuration == -1 && clickDelay == 0) {
+                console.log("KNEE IS READY");
+            }
+            //Delay Clicks > Kill Spam
+            if (clickDelay > 0) {
+                clickDelay--;
+            }
+            //console.log(clickDelay);
+            //console.log(falconState);
+            //Collision Test
+            var distance = Math.sqrt((this.falcon.x - this.ringBullet.x) * (this.falcon.x - this.ringBullet.x) + (this.falcon.y - this.ringBullet.y) * (this.falcon.y - this.ringBullet.y));
+            if (distance < 100 && this.falcon.currentFrame == 4) {
+                console.log("Ring got Knee'd");
+                this.ringBullet.y = 900;
+            }
+            if (distance < 50 && this.falcon.currentFrame != 4) {
+                console.log("You Got Hit");
+                falconState = "Hit";
+                this.falcon.gotoAndPlay("falconKnee1");
+                recoveryDelay = 20;
+            }
+            if (recoveryDelay > 0) {
+                recoveryDelay--;
+            }
+            if (recoveryDelay == 0) {
+                recoveryDelay = -1;
+                this.falcon.gotoAndPlay("FalconKick");
+                falconState = "Kick";
             }
             stage.update(); // Refreshes our stage
         }; // Update Method

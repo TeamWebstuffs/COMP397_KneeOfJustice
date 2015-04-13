@@ -35,19 +35,6 @@ var objects;
             this.x += speedX;
             speedX += 0.025;
             //test
-            if (this.y < 100) {
-                edgeState = 0;
-            }
-            else if (this.y > 100 && this.y < 200) {
-                edgeState = 1;
-            }
-            else if (this.y > 200 && this.y < 300) {
-                edgeState = 2;
-            }
-            else if (this.y > 300) {
-                edgeState = 3;
-            }
-            console.log("state is " + edgeState);
         };
         return Plane;
     })(createjs.Sprite);

@@ -20,7 +20,7 @@ var states;
             this.ocean = new objects.Ocean();
             this.game.addChild(this.ocean);
             //Game Over Label
-            this.mailPilotLabel = new objects.Label(320, 40, "MAIL PILOT");
+            this.mailPilotLabel = new objects.Label(320, 40, "KNEE OF JUSTICE");
             this.mailPilotLabel.font = "60px Consolas";
             this.mailPilotLabel.regX = this.mailPilotLabel.getMeasuredWidth() * 0.5;
             this.mailPilotLabel.regY = this.mailPilotLabel.getMeasuredLineHeight() * 0.5;

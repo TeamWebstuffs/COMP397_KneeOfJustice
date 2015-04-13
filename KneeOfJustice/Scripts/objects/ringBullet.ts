@@ -4,7 +4,9 @@ module objects {
     export class RingBullet extends createjs.Bitmap {
         public width: number;
         public height: number;
-        public active = true;
+        public active = false;
+
+        public ySpeed = 0;
 
         // CONSTRUCTOR
         constructor() {
@@ -21,11 +23,13 @@ module objects {
         // PUBLIC METHODS
         public update() {
             if (this.active) {
-                this.x -= 5;
+                this.x -= 15;
+                this.y += this.ySpeed;
             }
 
             if (this.x < -100) {
-                this.active = false;
+                //this.active = false;
+                this.reset();
             }
         }
 
@@ -33,7 +37,8 @@ module objects {
         public reset() {
             this.x = 1175;
             this.y = 265;
-
+            //this.ySpeed = Math.floor(Math.random() * 1 + 1);
+            console.log(this.ySpeed);
         }
 
     }

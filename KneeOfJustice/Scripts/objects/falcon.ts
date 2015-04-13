@@ -6,6 +6,7 @@ module objects {
         public height: number;
         public isColliding: boolean = false;
         public theme;
+        public active: boolean = false;
 
         // CONSTRUCTOR
         constructor() {
@@ -30,11 +31,11 @@ module objects {
         public update() {
 
             //
-            if (this.y > stage.mouseY) {
-                //this.y -= 5;
+            if (this.active && this.y > stage.mouseY) {
+                this.y -= 5;
             }
-            if (this.y < stage.mouseY) {
-                //this.y += 5;
+            if (this.active && this.y < stage.mouseY) {
+                this.y += 5;
             }
 
             //this.x += speedX;
@@ -43,17 +44,9 @@ module objects {
 
 
             //test
-            if (this.y < 100) {
-                edgeState = 0;
-            } else if (this.y > 100 && this.y < 200) {
-                edgeState = 1;
-            } else if (this.y > 200 && this.y < 300) {
-                edgeState = 2;
-            } else if (this.y > 300) {
-                edgeState = 3;
-            }
 
-            console.log("state is " + edgeState);
+
+            //console.log("state is " + edgeState);
 
 
 

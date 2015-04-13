@@ -18,18 +18,19 @@ var objects;
         }
         // PUBLIC METHODS ++++++++++++++++++++++++++++++++++++++++++
         Ocean.prototype.update = function () {
-            this.y += this._dy;
+            //this.y += this._dy;
+            this.x -= 10;
             this._checkBounds();
         };
         // Reset position of island to the top
         Ocean.prototype.reset = function () {
-            this.y = -960;
+            this.y = 0;
             this.x = 0;
         };
         // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++
         Ocean.prototype._checkBounds = function () {
             // check if island has left the bottom of the screen
-            if (this.y === 0) {
+            if (this.x === -50) {
                 this.reset();
             }
         };

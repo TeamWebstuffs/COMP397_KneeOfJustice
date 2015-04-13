@@ -12,7 +12,8 @@ var objects;
         // CONSTRUCTOR
         function RingBullet() {
             _super.call(this, assetLoader.getResult("ringBullet"));
-            this.active = true;
+            this.active = false;
+            this.ySpeed = 0;
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
             //Spawn Point
@@ -22,16 +23,20 @@ var objects;
         // PUBLIC METHODS
         RingBullet.prototype.update = function () {
             if (this.active) {
-                this.x -= 5;
+                this.x -= 15;
+                this.y += this.ySpeed;
             }
             if (this.x < -100) {
-                this.active = false;
+                //this.active = false;
+                this.reset();
             }
         };
         // Reset position of island to the top
         RingBullet.prototype.reset = function () {
             this.x = 1175;
             this.y = 265;
+            //this.ySpeed = Math.floor(Math.random() * 1 + 1);
+            console.log(this.ySpeed);
         };
         return RingBullet;
     })(createjs.Bitmap);

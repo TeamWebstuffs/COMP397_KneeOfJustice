@@ -39,10 +39,14 @@ var currentScore = 0;
 var highScore = 0;
 
 var speedX = 0.05;
-var edgeState = 0;
+var edgeState = 1;
 
 var falconAtlas: createjs.SpriteSheet;
 var falconState;
+
+var clickDelay = 0;
+var kneeDuration = -1;
+var recoveryDelay = -1;
 
 // Game State Variables
 var currentState: number;
@@ -56,7 +60,7 @@ var menu: states.Menu;
 var manifest = [
     { id: "cloud", src: "assets/images/cloud.png" },
     { id: "island", src: "assets/images/island.png" },
-    { id: "ocean", src: "assets/images/ocean.gif" },
+    { id: "ocean", src: "assets/images/space.jpg" },
     { id: "knee", src: "assets/images/knee.fw.png" },
     { id: "edgeNeutral", src: "assets/images/edgeNeutral.fw.png" },
     { id: "edgePew", src: "assets/images/edgePew.fw.png" },
@@ -119,16 +123,22 @@ var fAtlas = {
         "falconKick7": [11],
         "falconKnee1": [12],
 
-        "FalconIdle": {
-            frames: [0],
-            next: "FalconKick",
-            speed: 0.1
-        },
-
         "FalconKick": {
             frames: [0, 5, 6, 7, 8, 9, 10, 11],
             next: "falconKick7",
-            speed: 0.2
+            speed: 0.75
+        },
+
+        "KickToKnee": {
+            frames: [10, 9, 12, 1, 2, 3],
+            next: "falconKnee5",
+            speed: 0.75
+        },
+
+        "KneeToKick": {
+            frames: [3, 2, 9, 10],
+            next: "falconKick7",
+            speed: 0.5
         }
     }
 }

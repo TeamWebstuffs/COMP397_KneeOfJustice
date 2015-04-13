@@ -86,6 +86,7 @@
     <Content Include="assets\images\playButton.png" />
     <Content Include="assets\images\ringBullet.fw.png" />
     <Content Include="assets\images\sideplane.gif" />
+    <Content Include="assets\images\space.jpg" />
     <Content Include="assets\images\startbutton.png" />
     <Content Include="assets\images\tryAgainButton.png" />
     <Content Include="css\game.css" />
