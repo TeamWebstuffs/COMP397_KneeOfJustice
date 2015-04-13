@@ -13,7 +13,6 @@ var states;
     var Menu = (function () {
         // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         function Menu() {
-
             this.play = false;
             // Instantiate Game Container
             this.game = new createjs.Container();
@@ -26,8 +25,6 @@ var states;
             this.mailPilotLabel.regX = this.mailPilotLabel.getMeasuredWidth() * 0.5;
             this.mailPilotLabel.regY = this.mailPilotLabel.getMeasuredLineHeight() * 0.5;
             this.game.addChild(this.mailPilotLabel);
-
-            
             //Play Button
             this.playButton = new objects.Button(320, 280, "playButton");
             this.playButton.on("click", this.playClicked, this);

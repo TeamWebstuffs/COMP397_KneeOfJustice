@@ -1,4 +1,4 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -12,15 +12,12 @@ var objects;
         // CONSTRUCTOR
         function Plane() {
             _super.call(this, falconAtlas, "falconStand");
-
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
-
             //this.x = 100;
             this.regX = this.width * 0.5;
             this.regY = this.height * 0.5;
             createjs.Sound.play("ken", { loop: -1 });
-
             //Spawn Point
             this.x = 100;
             this.y = 200;
@@ -35,21 +32,21 @@ var objects;
             if (this.y < stage.mouseY) {
                 this.y += 5;
             }
-
             this.x += speedX;
             speedX += 0.025;
-
             //test
             if (this.y < 100) {
                 edgeState = 0;
-            } else if (this.y > 100 && this.y < 200) {
+            }
+            else if (this.y > 100 && this.y < 200) {
                 edgeState = 1;
-            } else if (this.y > 200 && this.y < 300) {
+            }
+            else if (this.y > 200 && this.y < 300) {
                 edgeState = 2;
-            } else if (this.y > 300) {
+            }
+            else if (this.y > 300) {
                 edgeState = 3;
             }
-
             console.log("state is " + edgeState);
         };
         return Plane;
