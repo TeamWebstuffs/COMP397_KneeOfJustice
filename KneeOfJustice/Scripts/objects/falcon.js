@@ -1,16 +1,18 @@
-﻿
-module objects {
+﻿var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var objects;
+(function (objects) {
     // PLANE CLASS
-    export class Falcon extends createjs.Sprite {
-        public width: number;
-        public height: number;
-        public isColliding: boolean = false;
-        public theme;
-        public kick;
-
+    var Falcon = (function (_super) {
+        __extends(Falcon, _super);
         // CONSTRUCTOR
-        constructor() {
-            super(falconAtlas, "falconStand");
+        function Falcon() {
+            _super.call(this, falconAtlas, "falconStand");
+            this.isColliding = false;
 
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
@@ -19,17 +21,15 @@ module objects {
             this.regY = this.height * 0.5;
 
             this.theme = createjs.Sound.play("ken", { loop: -1 });
-            
+
             //Spawn Point
             this.x = 100;
             this.y = 250;
-            
+
             falconState = "Start";
         }
-
         // PUBLIC METHODS
-        public update() {
-
+        Falcon.prototype.update = function () {
             //
             if (this.y > stage.mouseY) {
                 //this.y -= 5;
@@ -40,9 +40,6 @@ module objects {
 
             //this.x += speedX;
             //speedX += 0.025;
-
-
-
             //test
             if (this.y < 100) {
                 edgeState = 0;
@@ -55,11 +52,9 @@ module objects {
             }
 
             console.log("state is " + edgeState);
-
-
-
-        }
-
-    }
-
-} 
+        };
+        return Falcon;
+    })(createjs.Sprite);
+    objects.Falcon = Falcon;
+})(objects || (objects = {}));
+//# sourceMappingURL=falcon.js.map
