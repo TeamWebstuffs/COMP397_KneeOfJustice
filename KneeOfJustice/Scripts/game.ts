@@ -22,6 +22,9 @@
 /// <reference path="objects/edgepew.ts" />
 /// <reference path="objects/ringbullet.ts" />
 
+
+/// <reference path="objects/falcon.ts" />
+
 /// <reference path="states/gameplay.ts" />
 /// <reference path="states/gameover.ts" />
 /// <reference path="states/menu.ts" />
@@ -39,6 +42,7 @@ var speedX = 0.05;
 var edgeState = 0;
 
 var falconAtlas: createjs.SpriteSheet;
+var falconState;
 
 // Game State Variables
 var currentState: number;
