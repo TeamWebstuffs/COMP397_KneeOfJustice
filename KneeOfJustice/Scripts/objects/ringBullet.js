@@ -1,4 +1,4 @@
-var __extends = this.__extends || function (d, b) {
+﻿var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -13,8 +13,10 @@ var objects;
         function RingBullet() {
             _super.call(this, assetLoader.getResult("ringBullet"));
             this.active = true;
+
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
+
             //Spawn Point
             this.x = 1175;
             this.y = 265;
@@ -24,10 +26,12 @@ var objects;
             if (this.active) {
                 this.x -= 5;
             }
+
             if (this.x < -100) {
                 this.active = false;
             }
         };
+
         // Reset position of island to the top
         RingBullet.prototype.reset = function () {
             this.x = 1175;

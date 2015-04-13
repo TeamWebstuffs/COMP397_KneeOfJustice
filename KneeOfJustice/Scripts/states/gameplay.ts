@@ -145,6 +145,8 @@ module states {
             function handleClick(event) {
                 console.log("CLICK IS HAPPEN!!");
 
+                gamePlay.plane.gotoAndPlay("FalconKick");
+
                 if (!gamePlay.ringBullet.active) {
                     gamePlay.ringBullet.x = 100;
                     gamePlay.ringBullet.active = true;

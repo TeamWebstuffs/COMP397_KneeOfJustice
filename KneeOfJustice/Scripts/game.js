@@ -1,4 +1,4 @@
-/// <reference path="typings/createjs-lib/createjs-lib.d.ts" />
+﻿/// <reference path="typings/createjs-lib/createjs-lib.d.ts" />
 /// <reference path="typings/easeljs/easeljs.d.ts" />
 /// <reference path="typings/tweenjs/tweenjs.d.ts" />
 /// <reference path="typings/soundjs/soundjs.d.ts" />
@@ -28,16 +28,21 @@ var assetLoader;
 var stats = new Stats();
 var currentScore = 0;
 var highScore = 0;
+
 var speedX = 0.05;
 var edgeState = 0;
+
 var falconAtlas;
+
 // Game State Variables
 var currentState;
 var currentStateFunction;
 var stateChanged = false;
+
 var gamePlay;
 var gameOver;
 var menu;
+
 var manifest = [
     { id: "cloud", src: "assets/images/cloud.png" },
     { id: "island", src: "assets/images/island.png" },
@@ -48,22 +53,13 @@ var manifest = [
     { id: "edgeHit1", src: "assets/images/edgeHit1.fw.png" },
     { id: "edgeHit2", src: "assets/images/edgeHit2.fw.png" },
     { id: "ringBullet", src: "assets/images/ringBullet.fw.png" },
-    { id: "playButton", src: "assets/images/playButton.png" },
+    { id: "playButton", src: "assets/images/startbutton.png" },
     { id: "tryAgainButton", src: "assets/images/tryAgainButton.png" },
     { id: "engine", src: "assets/audio/engine.ogg" },
-    
-    { id: "ken", src: "assets/audio/02 KEN STAGE.mp3" },
-    { id: "atomic", src: "assets/audio/Mileshit.mp3" },
-    { id: "gameover", src: "assets/audio/falconover.wav" },
-    { id: "falcondeath", src: "assets/audio/falcondeath.wav" },
-    { id: "kick", src: "assets/audio/falconkick.wav" },
-    { id: "knee", src: "assets/audio/Beforeknee.wav" },
-    { id: "afterknee", src: "assets/audio/Afterknee.wav" },
-    { id: "laser", src: "assets/audio/laserbeam.mp3" },
-
     { id: "yay", src: "assets/audio/yay.ogg" },
     { id: "thunder", src: "assets/audio/thunder.ogg" }
 ];
+
 var fAtlas = {
     "images": ["assets/images/FalconAtlas.png"],
     "frames": [
@@ -107,6 +103,7 @@ var fAtlas = {
         }
     }
 };
+
 var mAtlas = {
     "images": ["assets/images/MilesAtlas.png"],
     "frames": [
@@ -132,13 +129,17 @@ var mAtlas = {
         "MilesRestart": [8]
     }
 };
+
 function Preload() {
     assetLoader = new createjs.LoadQueue(); // create a new preloader
     assetLoader.installPlugin(createjs.Sound); // need plugin for sounds
     assetLoader.on("complete", init, this); // when assets finished preloading - then init function
+
     assetLoader.loadManifest(manifest);
+
     falconAtlas = new createjs.SpriteSheet(fAtlas);
 }
+
 function init() {
     canvas = document.getElementById("canvas");
     stage = new createjs.Stage(canvas);
@@ -146,28 +147,35 @@ function init() {
     createjs.Ticker.setFPS(60); // 60 frames per second
     createjs.Ticker.addEventListener("tick", gameLoop);
     setupStats();
+
     currentState = constants.MENU_STATE;
     changeState(currentState);
 }
+
 function setupStats() {
     stats.setMode(0);
+
     // align top-left
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.left = '650px';
     stats.domElement.style.top = '440px';
+
     document.body.appendChild(stats.domElement);
 }
+
 function gameLoop() {
     stats.begin();
+
     if (stateChanged) {
         changeState(currentState);
         stateChanged = false;
-    }
-    else {
+    } else {
         currentStateFunction.update();
     }
+
     stats.end();
 }
+
 function changeState(state) {
     switch (state) {
         case constants.MENU_STATE:
@@ -175,11 +183,13 @@ function changeState(state) {
             menu = new states.Menu();
             currentStateFunction = menu;
             break;
+
         case constants.PLAY_STATE:
             // instantiate game play screen
             gamePlay = new states.GamePlay();
             currentStateFunction = gamePlay;
             break;
+
         case constants.GAME_OVER_STATE:
             // instantiate game over screen
             gameOver = new states.GameOver();

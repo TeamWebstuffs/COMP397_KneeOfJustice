@@ -59,18 +59,26 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\audio\02 KEN STAGE.mp3" />
+    <Content Include="assets\audio\Afterknee.wav" />
+    <Content Include="assets\audio\Beforeknee.wav" />
+    <Content Include="assets\audio\falcondeath.wav" />
+    <Content Include="assets\audio\falconkick.wav" />
+    <Content Include="assets\audio\falconover.wav" />
+    <Content Include="assets\audio\laserbeam.mp3" />
+    <Content Include="assets\audio\Mileshit.mp3" />
     <Content Include="assets\images\1945.bmp" />
     <Content Include="assets\images\cloud.png" />
+    <Content Include="assets\images\congratulations.png" />
     <Content Include="assets\images\edgeHit1.fw.png" />
     <Content Include="assets\images\edgeHit2.fw.png" />
     <Content Include="assets\images\edgeNeutral.fw.png" />
     <Content Include="assets\images\edgePew.fw.png" />
-    <Content Include="assets\images\gameover screen.png" />
+    <Content Include="assets\images\gameoverscreen.png" />
     <Content Include="assets\images\island.png" />
     <Content Include="assets\images\knee.fw.png" />
     <Content Include="assets\images\kneeofJustice.png" />
     <Content Include="assets\images\kneeofJusticeandtext.png" />
-    <Content Include="assets\images\Kneeofjusticestart.png" />
     <Content Include="assets\images\KNEEOVER.png" />
     <Content Include="assets\images\ocean.gif" />
     <Content Include="assets\images\plane.png" />
@@ -78,6 +86,7 @@
     <Content Include="assets\images\playButton.png" />
     <Content Include="assets\images\ringBullet.fw.png" />
     <Content Include="assets\images\sideplane.gif" />
+    <Content Include="assets\images\startbutton.png" />
     <Content Include="assets\images\tryAgainButton.png" />
     <Content Include="css\game.css" />
     <Content Include="index.html" />

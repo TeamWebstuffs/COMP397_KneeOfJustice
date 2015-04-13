@@ -12,7 +12,7 @@ module objects {
 
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
-
+            
             //Spawn Point
             this.x = 1175;
             this.y = 265;
