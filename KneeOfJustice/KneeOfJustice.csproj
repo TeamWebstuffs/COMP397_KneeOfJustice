@@ -160,7 +160,6 @@
     <TypeScriptCompile Include="Scripts\objects\edgeHit2.ts" />
     <TypeScriptCompile Include="Scripts\objects\edgeNeutral.ts" />
     <TypeScriptCompile Include="Scripts\objects\edgePew.ts" />
-    <TypeScriptCompile Include="Scripts\objects\falcon.ts" />
     <TypeScriptCompile Include="Scripts\objects\gameobject.ts" />
     <TypeScriptCompile Include="Scripts\objects\island.ts" />
     <TypeScriptCompile Include="Scripts\objects\label.ts" />
