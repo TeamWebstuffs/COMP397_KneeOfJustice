@@ -140,6 +140,18 @@ module states {
                 stateChanged = true;
             }
 
+            canvas.addEventListener("click", handleClick);
+
+            function handleClick(event) {
+                console.log("CLICK IS HAPPEN!!");
+
+                if (!gamePlay.ringBullet.active) {
+                    gamePlay.ringBullet.x = 100;
+                    gamePlay.ringBullet.active = true;
+                }
+
+            }
+
             stage.update(); // Refreshes our stage
 
     } // Update Method

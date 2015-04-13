@@ -38,6 +38,8 @@ var highScore = 0;
 var speedX = 0.05;
 var edgeState = 0;
 
+var falconAtlas: createjs.SpriteSheet;
+
 // Game State Variables
 var currentState: number;
 var currentStateFunction: any;
@@ -64,6 +66,82 @@ var manifest = [
     { id: "thunder", src: "assets/audio/thunder.ogg" }
 ];
 
+var fAtlas = {
+    "images": ["assets/images/FalconAtlas.png"],
+    "frames": [
+
+        [2, 2, 168, 138],
+        [172, 2, 168, 138],
+        [342, 2, 168, 138],
+        [512, 2, 168, 138],
+        [2, 142, 168, 138],
+        [2, 282, 168, 138],
+        [2, 422, 168, 138],
+        [172, 142, 168, 138],
+        [342, 142, 168, 138],
+        [512, 142, 168, 138],
+        [172, 282, 168, 138],
+        [172, 422, 168, 138],
+        [342, 282, 168, 138]
+    ],
+    "animations": {
+
+        "falconStand": [0],
+        "falconKnee2": [1],
+        "falconKnee3": [2],
+        "falconKnee4": [3],
+        "falconKnee5": [4],
+        "falconKick1": [5],
+        "falconKick2": [6],
+        "falconKick3": [7],
+        "falconKick4": [8],
+        "falconKick5": [9],
+        "falconKick6": [10],
+        "falconKick7": [11],
+        "falconKnee1": [12],
+
+        "FalconIdle": {
+            frames: [0],
+            next: "FalconKick",
+            speed: 0.1
+        },
+
+        "FalconKick": {
+            frames: [0, 5, 6, 7, 8, 9, 10, 11],
+            next: "falconKick7",
+            speed: 0.2
+        }
+    }
+}
+
+var mAtlas = {
+    "images": ["assets/images/MilesAtlas.png"],
+    "frames": [
+
+        [2, 2, 658, 400],
+        [2, 404, 658, 400],
+        [2, 806, 658, 400],
+        [662, 2, 658, 400],
+        [1322, 2, 658, 400],
+        [662, 404, 658, 400],
+        [1322, 404, 658, 400],
+        [662, 806, 658, 400],
+        [1322, 806, 658, 400]
+    ],
+    "animations": {
+
+        "MilesEnd1": [0],
+        "MilesEnd2": [1],
+        "MilesEnd3": [2],
+        "MilesHit1": [3],
+        "MilesHit2": [4],
+        "MilesHit3": [5],
+        "MilesNeutral": [6],
+        "MilesPew": [7],
+        "MilesRestart": [8]
+    }
+}
+
 
 function Preload() {
     assetLoader = new createjs.LoadQueue(); // create a new preloader
@@ -71,6 +149,8 @@ function Preload() {
     assetLoader.on("complete", init, this); // when assets finished preloading - then init function
 
     assetLoader.loadManifest(manifest);
+
+    falconAtlas = new createjs.SpriteSheet(fAtlas);
 }
 
 
@@ -135,8 +215,6 @@ function changeState(state: number): void {
             break;
     }
 }
-
-
 
 
 

@@ -11,7 +11,7 @@ var objects;
         __extends(Plane, _super);
         // CONSTRUCTOR
         function Plane() {
-            _super.call(this, assetLoader.getResult("knee"));
+            _super.call(this, falconAtlas, "falconStand");
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
             //this.x = 100;
@@ -19,7 +19,7 @@ var objects;
             this.regY = this.height * 0.5;
             createjs.Sound.play("engine", { loop: -1 });
             //Spawn Point
-            this.x = 20;
+            this.x = 100;
             this.y = 200;
         }
         // PUBLIC METHODS
@@ -50,7 +50,7 @@ var objects;
             console.log("state is " + edgeState);
         };
         return Plane;
-    })(createjs.Bitmap);
+    })(createjs.Sprite);
     objects.Plane = Plane;
 })(objects || (objects = {}));
 //# sourceMappingURL=plane.js.map

@@ -23,6 +23,10 @@ module objects {
             if (this.active) {
                 this.x -= 5;
             }
+
+            if (this.x < -100) {
+                this.active = false;
+            }
         }
 
         // Reset position of island to the top

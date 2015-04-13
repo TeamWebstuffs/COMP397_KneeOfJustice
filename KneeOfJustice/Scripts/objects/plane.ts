@@ -1,13 +1,13 @@
 ﻿
 module objects {
     // PLANE CLASS
-    export class Plane extends createjs.Bitmap {
+    export class Plane extends createjs.Sprite {
         public width: number;
         public height: number;
 
         // CONSTRUCTOR
         constructor() {
-            super(assetLoader.getResult("knee"));
+            super(falconAtlas, "falconStand");
 
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
@@ -18,7 +18,7 @@ module objects {
             createjs.Sound.play("engine", { loop: -1 });
 
             //Spawn Point
-            this.x = 20;
+            this.x = 100;
             this.y = 200;
         }
 
@@ -51,6 +51,8 @@ module objects {
             }
 
             console.log("state is " + edgeState);
+
+            
 
         }
 
