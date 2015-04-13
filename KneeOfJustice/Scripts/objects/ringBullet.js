@@ -16,10 +16,6 @@ var objects;
 
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
-<<<<<<< HEAD
-            createjs.Sound.play("laser", { loop: 1 });
-=======
->>>>>>> parent of 384ddc0... Updates to Falcon object
 
             //Spawn Point
             this.x = 1175;
