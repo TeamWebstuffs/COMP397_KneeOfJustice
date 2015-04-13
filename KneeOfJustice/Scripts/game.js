@@ -51,6 +51,16 @@ var manifest = [
     { id: "playButton", src: "assets/images/playButton.png" },
     { id: "tryAgainButton", src: "assets/images/tryAgainButton.png" },
     { id: "engine", src: "assets/audio/engine.ogg" },
+    
+    { id: "ken", src: "assets/audio/02 KEN STAGE.mp3" },
+    { id: "atomic", src: "assets/audio/Mileshit.mp3" },
+    { id: "gameover", src: "assets/audio/falconover.wav" },
+    { id: "falcondeath", src: "assets/audio/falcondeath.wav" },
+    { id: "kick", src: "assets/audio/falconkick.wav" },
+    { id: "knee", src: "assets/audio/Beforeknee.wav" },
+    { id: "afterknee", src: "assets/audio/Afterknee.wav" },
+    { id: "laser", src: "assets/audio/laserbeam.mp3" },
+
     { id: "yay", src: "assets/audio/yay.ogg" },
     { id: "thunder", src: "assets/audio/thunder.ogg" }
 ];

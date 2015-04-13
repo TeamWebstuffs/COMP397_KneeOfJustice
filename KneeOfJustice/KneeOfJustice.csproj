@@ -65,10 +65,13 @@
     <Content Include="assets\images\edgeHit2.fw.png" />
     <Content Include="assets\images\edgeNeutral.fw.png" />
     <Content Include="assets\images\edgePew.fw.png" />
-    <Content Include="assets\images\FalconAtlas.png" />
+    <Content Include="assets\images\gameover screen.png" />
     <Content Include="assets\images\island.png" />
     <Content Include="assets\images\knee.fw.png" />
-    <Content Include="assets\images\MilesAtlas.png" />
+    <Content Include="assets\images\kneeofJustice.png" />
+    <Content Include="assets\images\kneeofJusticeandtext.png" />
+    <Content Include="assets\images\Kneeofjusticestart.png" />
+    <Content Include="assets\images\KNEEOVER.png" />
     <Content Include="assets\images\ocean.gif" />
     <Content Include="assets\images\plane.png" />
     <Content Include="assets\images\Platform.fw.png" />
