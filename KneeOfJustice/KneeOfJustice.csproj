@@ -111,6 +111,7 @@
     <Content Include="Scripts\objects\plane.js" />
     <Content Include="Scripts\objects\ringBullet.js" />
     <Content Include="Scripts\objects\scoreboard.js" />
+    <Content Include="Scripts\states\start.js" />
     <Content Include="Scripts\states\gameover.js" />
     <Content Include="Scripts\states\gameplay.js" />
     <Content Include="Scripts\states\menu.js" />

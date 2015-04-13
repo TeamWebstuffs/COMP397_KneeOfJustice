@@ -16,6 +16,7 @@ var objects;
 
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
+            createjs.Sound.play("laser", { loop: 1 });
 
             //Spawn Point
             this.x = 1175;

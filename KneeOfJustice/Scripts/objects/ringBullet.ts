@@ -12,7 +12,7 @@ module objects {
 
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
-            
+            createjs.Sound.play("laser", { loop: 1 });
             //Spawn Point
             this.x = 1175;
             this.y = 265;
@@ -22,11 +22,13 @@ module objects {
         public update() {
             if (this.active) {
                 this.x -= 5;
+                
             }
 
             if (this.x < -100) {
                 this.active = false;
             }
+
         }
 
         // Reset position of island to the top

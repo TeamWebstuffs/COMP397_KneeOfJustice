@@ -13,6 +13,7 @@ module states {
     // GAME OVER STATE CLASS
     export class GameOver {
         // Game Objects 
+        
         public game: createjs.Container;
         public ocean: objects.Ocean;
         public gameOverLabel: objects.Label;
@@ -27,6 +28,7 @@ module states {
             this.game = new createjs.Container();
 
             //Ocean object
+            
             this.ocean = new objects.Ocean();
             this.game.addChild(this.ocean);
 
