@@ -122,11 +122,6 @@ module states {
 
 
 
-            for (var bullets = 21; bullets >= 0; bullets--) {
-                this.ringBullets[bullets].update();
-
-                //Check Collision
-            }
 
 
             this.miles.update();
@@ -160,7 +155,9 @@ module states {
                     if (this.ringBullets[bullets].active == false) {
                         this.ringBullets[bullets].active = true;
                         this.ringBullets[bullets].spawn();
-                        this.ringBullets[bullets].ySpeed = 0;
+
+                        this.ringBullets[bullets].ySpeed =
+                        (Math.random() < 0.5 ? -1 : 1) * (Math.floor((Math.random() * 3) + 0));
 
                         shootCount++;
                     }
@@ -183,7 +180,7 @@ module states {
             if (milesState == "PewCD" && pewDuration == 0) {
                 gamePlay.miles.gotoAndPlay("MilesNeutral");
                 milesState = "Idle";
-                milesTimer = 120;
+                milesTimer = Math.floor((Math.random() * 70) + 40);
             }
 
 
@@ -239,34 +236,48 @@ module states {
 
 
 
+            //Collision Stuff
             /*
-            //Collision Test
-            var distance = Math.sqrt(
-                (this.falcon.x - this.ringBullet.x) * (this.falcon.x - this.ringBullet.x) +
-                (this.falcon.y - this.ringBullet.y) * (this.falcon.y - this.ringBullet.y)
-                );
+            var rect1 = { x: 5, y: 5, width: 50, height: 50 }
+            var rect2 = { x: 20, y: 10, width: 10, height: 10 }
 
-            if (distance < 100 && this.falcon.currentFrame == 4) {
-                console.log("Ring got Knee'd");
-                this.ringBullet.y = 900;
-            }
-            if (distance < 50 && this.falcon.currentFrame != 4) {
-                console.log("You Got Hit");
-                falconState = "Hit";
-                this.falcon.gotoAndPlay("FalconKnee1");
-                recoveryDelay = 20;
+            if (rect1.x < rect2.x + rect2.width &&
+                rect1.x + rect1.width > rect2.x &&
+                rect1.y < rect2.y + rect2.height &&
+                rect1.height + rect1.y > rect2.y) {
+                // collision detected!
             }
 
-            if (recoveryDelay > 0) {
-                recoveryDelay--;
-            }
-            if (recoveryDelay == 0) {
-                recoveryDelay = -1;
-                this.falcon.gotoAndPlay("FalconKick");
-                falconState = "Kick";
+            // filling in the values =>
+
+            if (5 < 30 &&
+                55 > 20 &&
+                5 < 20 &&
+                55 > 10) {
+                // collision detected!
             }
             */
 
+            
+
+            
+            for (var bullets = 21; bullets >= 0; bullets--) {
+                this.ringBullets[bullets].update();
+
+                //Falcon and Ring
+                if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW &&
+                    gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX &&
+                    gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH &&
+                    gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY)
+                {
+                    console.log("GET HIT");
+                }
+
+
+            }
+            
+
+            //console.log("Falcon Y: " + gamePlay.falcon.y);
 
 
 

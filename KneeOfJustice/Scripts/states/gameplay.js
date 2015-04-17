@@ -77,9 +77,6 @@ var states;
                 currentState = constants.GAME_OVER_STATE;
                 stateChanged = true;
             }
-            for (var bullets = 21; bullets >= 0; bullets--) {
-                this.ringBullets[bullets].update();
-            }
             this.miles.update();
             this.falcon.update();
             //Game Start
@@ -104,7 +101,7 @@ var states;
                     if (this.ringBullets[bullets].active == false) {
                         this.ringBullets[bullets].active = true;
                         this.ringBullets[bullets].spawn();
-                        this.ringBullets[bullets].ySpeed = 0;
+                        this.ringBullets[bullets].ySpeed = (Math.random() < 0.5 ? -1 : 1) * (Math.floor((Math.random() * 3) + 0));
                         shootCount++;
                     }
                     //Only Shoot 1 Bullet
@@ -122,7 +119,7 @@ var states;
             if (milesState == "PewCD" && pewDuration == 0) {
                 gamePlay.miles.gotoAndPlay("MilesNeutral");
                 milesState = "Idle";
-                milesTimer = 120;
+                milesTimer = Math.floor((Math.random() * 70) + 40);
             }
             //console.log("> " + pewDuration);
             //Handle all of the 'click' related stuff
@@ -158,33 +155,14 @@ var states;
             if (clickDelay > 0) {
                 clickDelay--;
             }
-            /*
-            //Collision Test
-            var distance = Math.sqrt(
-                (this.falcon.x - this.ringBullet.x) * (this.falcon.x - this.ringBullet.x) +
-                (this.falcon.y - this.ringBullet.y) * (this.falcon.y - this.ringBullet.y)
-                );
-
-            if (distance < 100 && this.falcon.currentFrame == 4) {
-                console.log("Ring got Knee'd");
-                this.ringBullet.y = 900;
+            for (var bullets = 21; bullets >= 0; bullets--) {
+                this.ringBullets[bullets].update();
+                //Falcon and Ring
+                if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX && gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY) {
+                    console.log("GET HIT");
+                }
             }
-            if (distance < 50 && this.falcon.currentFrame != 4) {
-                console.log("You Got Hit");
-                falconState = "Hit";
-                this.falcon.gotoAndPlay("FalconKnee1");
-                recoveryDelay = 20;
-            }
-
-            if (recoveryDelay > 0) {
-                recoveryDelay--;
-            }
-            if (recoveryDelay == 0) {
-                recoveryDelay = -1;
-                this.falcon.gotoAndPlay("FalconKick");
-                falconState = "Kick";
-            }
-            */
+            //console.log("Falcon Y: " + gamePlay.falcon.y);
             stage.update(); // Refreshes our stage
         }; // Update Method
         return GamePlay;

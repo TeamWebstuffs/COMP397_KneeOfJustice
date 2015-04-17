@@ -22,9 +22,14 @@ var objects;
             //Spawn Point
             this.x = 1006;
             this.y = 3000;
+            this.hitW = 55;
+            this.hitH = 55;
         }
         // PUBLIC METHODS
         RingBullet.prototype.update = function () {
+            //Update Hitbox
+            this.hitX = this.x - 27;
+            this.hitY = this.y - 27;
             if (this.active) {
                 this.x -= 10;
                 this.y += this.ySpeed;

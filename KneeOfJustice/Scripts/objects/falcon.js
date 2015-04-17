@@ -23,9 +23,14 @@ var objects;
             this.x = 100;
             this.y = 250;
             falconState = "Start";
+            this.hitW = 125;
+            this.hitH = 70;
         }
         // PUBLIC METHODS
         Falcon.prototype.update = function () {
+            //Update Hitbox
+            this.hitX = this.x - 62;
+            this.hitY = this.y - 35;
             //
             if (this.active && this.y > stage.mouseY) {
                 this.y -= 10;

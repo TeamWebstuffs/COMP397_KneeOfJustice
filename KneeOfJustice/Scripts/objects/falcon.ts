@@ -7,6 +7,10 @@ module objects {
         public isColliding: boolean = false;
         public theme;
         public active: boolean = false;
+        public hitX;
+        public hitY;
+        public hitW;
+        public hitH;
 
         // CONSTRUCTOR
         constructor() {
@@ -23,10 +27,17 @@ module objects {
             this.y = 250;
 
             falconState = "Start";
+
+            this.hitW = 125;
+            this.hitH = 70;
         }
 
         // PUBLIC METHODS
         public update() {
+            //Update Hitbox
+            this.hitX = this.x - 62;
+            this.hitY = this.y - 35;
+
 
             //
             if (this.active && this.y > stage.mouseY) {
