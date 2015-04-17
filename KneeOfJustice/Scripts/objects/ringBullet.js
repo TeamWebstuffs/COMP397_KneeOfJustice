@@ -27,6 +27,7 @@ var objects;
         RingBullet.prototype.update = function () {
             if (this.active) {
                 this.x -= 10;
+                this.y += this.ySpeed;
             }
             if (this.x < -50) {
                 this.active = false;

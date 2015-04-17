@@ -52,11 +52,14 @@ var milesState;
 //Start
 //Idle
 //Pew
+//Pewing
 //PewPew
+//PewPewing
 //PewSpray
 //RingForce
 //Hit
 var milesTimer = 0;
+var milesCombo = 0;
 
 
 // Game State Variables

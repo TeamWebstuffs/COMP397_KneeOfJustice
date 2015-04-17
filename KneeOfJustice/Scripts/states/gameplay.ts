@@ -150,8 +150,34 @@ module states {
                 milesTimer = -1;
             }
 
+            if (milesState == "Pew") {
+                
+                milesState = "Pewing";
 
-            console.log("MilesTimer: " + milesTimer);
+                var shootCount = 0;
+
+                for (var bullets = 21; bullets >= 0; bullets--) {
+                    if (this.ringBullets[bullets].active == false) {
+                        this.ringBullets[bullets].active = true;
+                        this.ringBullets[bullets].spawn();
+                        this.ringBullets[bullets].ySpeed = 0;
+                    }
+
+                    //Only Shoot 1 Bullet
+                    if (shootCount == 1) {
+                        break;
+                    }
+                    
+                }
+                
+                milesState = "Idle";
+                milesTimer = 90;
+            }
+
+            if (milesState = "Idle") {
+                gamePlay.miles.gotoAndPlay("MilesNeutral");
+            }
+
 
 
             //Handle all of the 'click' related stuff

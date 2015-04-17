@@ -27,6 +27,7 @@ module objects {
         public update() {
             if (this.active) {
                 this.x -= 10;
+                this.y += this.ySpeed;
             }
 
             if (this.x < -50) {
