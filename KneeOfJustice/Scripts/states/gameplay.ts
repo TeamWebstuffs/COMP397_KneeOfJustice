@@ -7,6 +7,8 @@
 /// <reference path="../objects/scoreboard.ts" />
 /// <reference path="../objects/label.ts" />
 
+/// <reference path="../objects/falcon.ts" />
+
 module states {
 
     export class GamePlay {
@@ -22,6 +24,8 @@ module states {
         public edgeHit1: objects.EdgeHit1;
         public edgeHit2: objects.EdgeHit2;
         public ringBullet: objects.RingBullet;
+
+        public falcon: objects.Falcon;
 
         constructor() {
             // Instantiate Game Container
@@ -53,7 +57,7 @@ module states {
 
             //Plane object
             this.plane = new objects.Plane();
-            this.game.addChild(this.plane);
+            //this.game.addChild(this.plane);
 
             
 
@@ -66,6 +70,10 @@ module states {
 
             // Instantiate Scoreboard
             this.scoreboard = new objects.ScoreBoard(this.game);
+
+            this.falcon = new objects.Falcon();
+            this.game.addChild(this.falcon);
+
 
             // Add Game Container to Stage
             stage.addChild(this.game);
@@ -140,20 +148,19 @@ module states {
                 stateChanged = true;
             }
 
+            this.falcon.update();
+
             //Handle all of the 'click' related stuff
             stage.addEventListener("click", handleClick);
 
             function handleClick(event) {
                 //console.log("Click Detected");
 
-<<<<<<< HEAD
                 //Start > Kick
                 if (falconState == "Start") {
                     gamePlay.falcon.gotoAndPlay("FalconKick");
                     falconState = "Kick";
-=======
-                gamePlay.plane.gotoAndPlay("FalconKick");
->>>>>>> origin/master
+                    gamePlay.plane.gotoAndPlay("FalconKick");
 
                     clickDelay = 5;
                 }

@@ -23,13 +23,12 @@ module objects {
         // PUBLIC METHODS
         public update() {
             if (this.active) {
-<<<<<<< HEAD
+
                 this.x -= 15;
                 this.y += this.ySpeed;
-=======
+
                 this.x -= 5;
                 
->>>>>>> origin/master
             }
 
             if (this.x < -100) {

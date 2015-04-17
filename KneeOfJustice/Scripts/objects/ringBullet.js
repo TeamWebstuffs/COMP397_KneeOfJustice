@@ -1,4 +1,4 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -12,16 +12,11 @@ var objects;
         // CONSTRUCTOR
         function RingBullet() {
             _super.call(this, assetLoader.getResult("ringBullet"));
-<<<<<<< HEAD
             this.active = false;
             this.ySpeed = 0;
-=======
-            this.active = true;
-
->>>>>>> origin/master
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
-
+            createjs.Sound.play("laser", { loop: 1 });
             //Spawn Point
             this.x = 1175;
             this.y = 265;
@@ -31,14 +26,13 @@ var objects;
             if (this.active) {
                 this.x -= 15;
                 this.y += this.ySpeed;
+                this.x -= 5;
             }
-
             if (this.x < -100) {
                 //this.active = false;
                 this.reset();
             }
         };
-
         // Reset position of island to the top
         RingBullet.prototype.reset = function () {
             this.x = 1175;
