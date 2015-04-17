@@ -40,6 +40,7 @@ var milesState;
 //Idle
 //Pew
 //Pewing
+//PewCD
 //PewPew
 //PewPewing
 //PewSpray
@@ -47,6 +48,7 @@ var milesState;
 //Hit
 var milesTimer = 0;
 var milesCombo = 0;
+var pewDuration = 0;
 // Game State Variables
 var currentState;
 var currentStateFunction;

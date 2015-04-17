@@ -145,14 +145,14 @@ module states {
             }
 
             if (milesTimer == 0 && milesState == "Idle") {
-                milesState = "Pew";
                 gamePlay.miles.gotoAndPlay("MilesPew");
+                milesState = "Pew";               
                 milesTimer = -1;
             }
 
-            if (milesState == "Pew") {
-                
+            if (milesState == "Pew" && gamePlay.falcon.active) {
                 milesState = "Pewing";
+                pewDuration = 30;
 
                 var shootCount = 0;
 
@@ -161,22 +161,34 @@ module states {
                         this.ringBullets[bullets].active = true;
                         this.ringBullets[bullets].spawn();
                         this.ringBullets[bullets].ySpeed = 0;
+
+                        shootCount++;
                     }
 
                     //Only Shoot 1 Bullet
                     if (shootCount == 1) {
+                        console.log("BREAK");
                         break;
                     }
-                    
+                    console.log("shoot: " + shootCount);
                 }
                 
-                milesState = "Idle";
-                milesTimer = 90;
+                milesState = "PewCD";
             }
 
-            if (milesState = "Idle") {
-                gamePlay.miles.gotoAndPlay("MilesNeutral");
+            if (pewDuration > 0) {
+                pewDuration--;
             }
+
+            if (milesState == "PewCD" && pewDuration == 0) {
+                gamePlay.miles.gotoAndPlay("MilesNeutral");
+                milesState = "Idle";
+                milesTimer = 120;
+            }
+
+
+            //console.log("> " + pewDuration);
+
 
 
 

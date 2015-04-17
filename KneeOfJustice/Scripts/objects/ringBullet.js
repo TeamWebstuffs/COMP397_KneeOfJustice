@@ -35,7 +35,7 @@ var objects;
         };
         // Reset position of island to the top
         RingBullet.prototype.spawn = function () {
-            createjs.Sound.play("laser", { loop: 1 });
+            createjs.Sound.play("laser", { loop: 0, volume: 0.5 });
             //Respawn
             this.x = 1006;
             this.y = 300;

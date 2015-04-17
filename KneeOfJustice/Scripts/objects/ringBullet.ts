@@ -38,7 +38,7 @@ module objects {
 
         // Reset position of island to the top
         public spawn() {
-            createjs.Sound.play("laser", { loop: 1 });
+            createjs.Sound.play("laser", { loop: 0, volume: 0.5 });
 
             //Respawn
             this.x = 1006;
