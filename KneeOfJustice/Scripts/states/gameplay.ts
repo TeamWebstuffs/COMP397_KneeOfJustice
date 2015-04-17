@@ -268,16 +268,26 @@ module states {
                 if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW &&
                     gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX &&
                     gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH &&
-                    gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY)
+                    gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY &&
+                    falconState == "Kick"
+                    )
                 {
                     console.log("GET HIT");
+                    falconState = "Hit";
+                    this.falcon.gotoAndPlay("FalconKnee1");
+                    recoveryDelay = 20;
                 }
-
-
             }
             
+            if (recoveryDelay > 0) {
+                recoveryDelay--;
+            }
+            if (recoveryDelay == 0) {
+                recoveryDelay = -1;
+                this.falcon.gotoAndPlay("FalconKick");
+                falconState = "Kick";
+            }
 
-            //console.log("Falcon Y: " + gamePlay.falcon.y);
 
 
 

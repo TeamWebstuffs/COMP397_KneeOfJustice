@@ -158,11 +158,21 @@ var states;
             for (var bullets = 21; bullets >= 0; bullets--) {
                 this.ringBullets[bullets].update();
                 //Falcon and Ring
-                if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX && gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY) {
+                if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX && gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY && falconState == "Kick") {
                     console.log("GET HIT");
+                    falconState = "Hit";
+                    this.falcon.gotoAndPlay("FalconKnee1");
+                    recoveryDelay = 20;
                 }
             }
-            //console.log("Falcon Y: " + gamePlay.falcon.y);
+            if (recoveryDelay > 0) {
+                recoveryDelay--;
+            }
+            if (recoveryDelay == 0) {
+                recoveryDelay = -1;
+                this.falcon.gotoAndPlay("FalconKick");
+                falconState = "Kick";
+            }
             stage.update(); // Refreshes our stage
         }; // Update Method
         return GamePlay;
