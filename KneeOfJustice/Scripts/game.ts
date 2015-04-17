@@ -33,8 +33,7 @@ var stats: Stats = new Stats();
 var currentScore = 0;
 var highScore = 0;
 
-
-
+//Falcon Stuff
 var falconAtlas: createjs.SpriteSheet;
 var falconState;
 //Start
@@ -44,9 +43,10 @@ var falconState;
 var clickDelay = 0;
 var kneeDuration = -1;
 var recoveryDelay = -1;
+var level = 0;
 
 
-
+//Miles Stuff
 var milesAtlas: createjs.SpriteSheet;
 var milesState;
 //Start
@@ -116,7 +116,8 @@ var fAtlas = {
         [512, 142, 168, 138],
         [172, 282, 168, 138],
         [172, 422, 168, 138],
-        [342, 282, 168, 138]
+        [342, 282, 168, 138],
+        [512, 282, 168, 138]
     ],
     "animations": {
 
@@ -133,6 +134,7 @@ var fAtlas = {
         "FalconKick6": [10],
         "FalconKick7": [11],
         "FalconKnee1": [12],
+        "FalconKneeReady": [13],
 
         "FalconKick": {
             frames: [0, 5, 6, 7, 8, 9, 10, 11],
@@ -187,9 +189,15 @@ var mAtlas = {
         },
 
         "Kneed2": {
-            frames: [5, 8],
+            frames: [5, 5, 8],
             speed: 0.025,
-            next: "MilesRestart"
+            next: "KneedToNeutral"
+        },
+
+        "KneedToNeutral": {
+            frames: [8, 6, 6],
+            speed: 0.025,
+            next: "MilesNeutral"
         }
     }
 }

@@ -6,6 +6,7 @@ module objects {
         public height: number;
 
         public active = false;
+        public reflect = false;
         public ySpeed = 0;
         public state = "";
 
@@ -37,10 +38,14 @@ module objects {
             this.hitX = this.x - 27;
             this.hitY = this.y - 27;
 
-            if (this.active) {
+            if (this.active && !this.reflect) {
                 this.x -= 10;
                 this.y += this.ySpeed;
             }
+            if (this.active && this.reflect) {
+                this.x += 10;
+            }
+
 
             if (this.x < -50) {
                 this.active = false;

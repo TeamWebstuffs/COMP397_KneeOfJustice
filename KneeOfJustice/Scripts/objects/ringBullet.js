@@ -13,6 +13,7 @@ var objects;
         function RingBullet() {
             _super.call(this, assetLoader.getResult("ringBullet"));
             this.active = false;
+            this.reflect = false;
             this.ySpeed = 0;
             this.state = "";
             this.width = this.getBounds().width;
@@ -30,9 +31,12 @@ var objects;
             //Update Hitbox
             this.hitX = this.x - 27;
             this.hitY = this.y - 27;
-            if (this.active) {
+            if (this.active && !this.reflect) {
                 this.x -= 10;
                 this.y += this.ySpeed;
+            }
+            if (this.active && this.reflect) {
+                this.x += 10;
             }
             if (this.x < -50) {
                 this.active = false;

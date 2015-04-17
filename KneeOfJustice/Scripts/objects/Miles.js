@@ -21,10 +21,14 @@ var objects;
             this.x = this.regX + 842;
             this.y = this.regY + 100;
             milesState = "Start";
+            this.hitW = 250;
+            this.hitH = 350;
         }
         // PUBLIC METHODS
         Miles.prototype.update = function () {
-            //
+            //Update Hitbox
+            this.hitX = this.x - 125 + 91;
+            this.hitY = this.y - 175 + 25;
         };
         return Miles;
     })(createjs.Sprite);
