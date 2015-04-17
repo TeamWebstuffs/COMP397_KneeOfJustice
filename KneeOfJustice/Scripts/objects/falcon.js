@@ -6,19 +6,19 @@ var __extends = this.__extends || function (d, b) {
 };
 var objects;
 (function (objects) {
-    // PLANE CLASS
+    // FALCON CLASS
     var Falcon = (function (_super) {
         __extends(Falcon, _super);
         // CONSTRUCTOR
         function Falcon() {
-            _super.call(this, falconAtlas, "falconStand");
+            _super.call(this, falconAtlas, "FalconStand");
             this.isColliding = false;
             this.active = false;
+            this.theme = createjs.Sound.play("ken", { loop: -1 });
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
             this.regX = this.width * 0.5;
             this.regY = this.height * 0.5;
-            this.theme = createjs.Sound.play("ken", { loop: -1 });
             //Spawn Point
             this.x = 100;
             this.y = 250;
@@ -28,15 +28,11 @@ var objects;
         Falcon.prototype.update = function () {
             //
             if (this.active && this.y > stage.mouseY) {
-                this.y -= 5;
+                this.y -= 10;
             }
             if (this.active && this.y < stage.mouseY) {
-                this.y += 5;
+                this.y += 10;
             }
-            //this.x += speedX;
-            //speedX += 0.025;
-            //test
-            //console.log("state is " + edgeState);
         };
         return Falcon;
     })(createjs.Sprite);

@@ -7,38 +7,29 @@
 /// <reference path="../objects/scoreboard.ts" />
 /// <reference path="../objects/label.ts" />
 /// <reference path="../objects/falcon.ts" />
+/// <reference path="../objects/miles.ts" />
 var states;
 (function (states) {
     var GamePlay = (function () {
         function GamePlay() {
-            this.clouds = [];
+            this.ringBullets = [];
             // Instantiate Game Container
             this.game = new createjs.Container();
             //Ocean object
             this.ocean = new objects.Ocean();
             this.game.addChild(this.ocean);
-            //Island object
-            this.island = new objects.Island();
-            //this.game.addChild(this.island);
-            this.edgeNeutral = new objects.EdgeNeutral();
-            this.game.addChild(this.edgeNeutral);
-            this.edgePew = new objects.EdgePew();
-            this.game.addChild(this.edgePew);
-            this.edgeHit1 = new objects.EdgeHit1();
-            this.game.addChild(this.edgeHit1);
-            this.edgeHit2 = new objects.EdgeHit2();
-            this.game.addChild(this.edgeHit2);
-            this.ringBullet = new objects.RingBullet();
-            this.game.addChild(this.ringBullet);
-            //Plane object
-            this.plane = new objects.Plane();
-            for (var cloud = 2; cloud >= 0; cloud--) {
-                this.clouds[cloud] = new objects.Cloud();
+            for (var bullets = 21; bullets >= 0; bullets--) {
+                this.ringBullets[bullets] = new objects.RingBullet();
+                this.game.addChild(this.ringBullets[bullets]);
             }
-            // Instantiate Scoreboard
-            this.scoreboard = new objects.ScoreBoard(this.game);
+            //Miles
+            this.miles = new objects.Miles();
+            this.game.addChild(this.miles);
+            //Falcon
             this.falcon = new objects.Falcon();
             this.game.addChild(this.falcon);
+            // Instantiate Scoreboard
+            this.scoreboard = new objects.ScoreBoard(this.game);
             // Add Game Container to Stage
             stage.addChild(this.game);
         } // Constructor
@@ -46,43 +37,33 @@ var states;
         GamePlay.prototype.distance = function (p1, p2) {
             return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
         }; //Distance Method
+        /*
         // CHECK COLLISION METHOD
-        GamePlay.prototype.checkCollision = function (collider) {
+        public checkCollision(collider: objects.GameObject) {
             if (this.scoreboard.active) {
-                var planePosition = new createjs.Point(this.plane.x, this.plane.y);
-                var objectPosition = new createjs.Point(collider.x, collider.y);
-                var theDistance = this.distance(planePosition, objectPosition);
-                if (theDistance < ((this.plane.height * 0.5) + (collider.height * 0.5))) {
-                    if (collider.isColliding != true) {
-                        createjs.Sound.play(collider.sound);
-                        if (collider.name == "cloud") {
-                            this.scoreboard.lives--;
-                        }
-                        if (collider.name == "island") {
-                            this.scoreboard.score += 100;
-                        }
+                var planePosition: createjs.Point = new createjs.Point(this.plane.x, this.plane.y);
+            var objectPosition: createjs.Point = new createjs.Point(collider.x, collider.y);
+            var theDistance = this.distance(planePosition, objectPosition);
+            if (theDistance < ((this.plane.height * 0.5) + (collider.height * 0.5))) {
+                if (collider.isColliding != true) {
+                    createjs.Sound.play(collider.sound);
+                    if (collider.name == "cloud") {
+                        this.scoreboard.lives--;
                     }
-                    collider.isColliding = true;
+                    if (collider.name == "island") {
+                        this.scoreboard.score += 100;
+                    }
                 }
-                else {
-                    collider.isColliding = false;
-                }
+                collider.isColliding = true;
+            } else {
+                collider.isColliding = false;
             }
-        }; // checkCollision Method
+        }
+        }
+         */
+        // checkCollision Method
         GamePlay.prototype.update = function () {
             this.ocean.update();
-            this.island.update();
-            this.edgeNeutral.update();
-            this.edgePew.update();
-            this.edgeHit1.update();
-            this.edgeHit2.update();
-            this.ringBullet.update();
-            this.plane.update();
-            for (var cloud = 2; cloud >= 0; cloud--) {
-                this.clouds[cloud].update();
-                this.checkCollision(this.clouds[cloud]);
-            }
-            this.checkCollision(this.island);
             this.scoreboard.update();
             if (this.scoreboard.lives < 1) {
                 this.scoreboard.active = false;
@@ -96,7 +77,26 @@ var states;
                 currentState = constants.GAME_OVER_STATE;
                 stateChanged = true;
             }
+            for (var bullets = 21; bullets >= 0; bullets--) {
+                this.ringBullets[bullets].update();
+            }
+            this.miles.update();
             this.falcon.update();
+            //Game Start
+            if (gamePlay.falcon.currentFrame == 11 && !gamePlay.falcon.active) {
+                gamePlay.falcon.active = true;
+                milesState = "Idle";
+                milesTimer = 60;
+            }
+            if (milesTimer > 0) {
+                milesTimer--;
+            }
+            if (milesTimer == 0 && milesState == "Idle") {
+                milesState = "Pew";
+                gamePlay.miles.gotoAndPlay("MilesPew");
+                milesTimer = -1;
+            }
+            console.log("MilesTimer: " + milesTimer);
             //Handle all of the 'click' related stuff
             stage.addEventListener("click", handleClick);
             function handleClick(event) {
@@ -105,7 +105,6 @@ var states;
                 if (falconState == "Start") {
                     gamePlay.falcon.gotoAndPlay("FalconKick");
                     falconState = "Kick";
-                    gamePlay.plane.gotoAndPlay("FalconKick");
                     clickDelay = 5;
                 }
                 //Kick > Knee
@@ -115,11 +114,6 @@ var states;
                     kneeDuration = 30;
                     clickDelay = 70;
                 }
-            }
-            //The Cap'n is in motion
-            if (gamePlay.falcon.currentFrame == 11) {
-                gamePlay.falcon.active = true;
-                gamePlay.ringBullet.active = true;
             }
             //CD on Knee && Knee > Kick
             if (kneeDuration > 0) {
@@ -131,16 +125,18 @@ var states;
                 kneeDuration = -1;
             }
             if (kneeDuration == -1 && clickDelay == 0) {
-                console.log("KNEE IS READY");
             }
             //Delay Clicks > Kill Spam
             if (clickDelay > 0) {
                 clickDelay--;
             }
-            //console.log(clickDelay);
-            //console.log(falconState);
+            /*
             //Collision Test
-            var distance = Math.sqrt((this.falcon.x - this.ringBullet.x) * (this.falcon.x - this.ringBullet.x) + (this.falcon.y - this.ringBullet.y) * (this.falcon.y - this.ringBullet.y));
+            var distance = Math.sqrt(
+                (this.falcon.x - this.ringBullet.x) * (this.falcon.x - this.ringBullet.x) +
+                (this.falcon.y - this.ringBullet.y) * (this.falcon.y - this.ringBullet.y)
+                );
+
             if (distance < 100 && this.falcon.currentFrame == 4) {
                 console.log("Ring got Knee'd");
                 this.ringBullet.y = 900;
@@ -148,9 +144,10 @@ var states;
             if (distance < 50 && this.falcon.currentFrame != 4) {
                 console.log("You Got Hit");
                 falconState = "Hit";
-                this.falcon.gotoAndPlay("falconKnee1");
+                this.falcon.gotoAndPlay("FalconKnee1");
                 recoveryDelay = 20;
             }
+
             if (recoveryDelay > 0) {
                 recoveryDelay--;
             }
@@ -159,6 +156,7 @@ var states;
                 this.falcon.gotoAndPlay("FalconKick");
                 falconState = "Kick";
             }
+            */
             stage.update(); // Refreshes our stage
         }; // Update Method
         return GamePlay;

@@ -16,10 +16,6 @@
 /// <reference path="objects/button.ts" />
 /// <reference path="objects/label.ts" />
 
-/// <reference path="objects/edgeneutral.ts" />
-/// <reference path="objects/edgehit2.ts" />
-/// <reference path="objects/edgehit1.ts" />
-/// <reference path="objects/edgepew.ts" />
 /// <reference path="objects/ringbullet.ts" />
 
 /// <reference path="objects/falcon.ts" />
@@ -37,15 +33,31 @@ var stats: Stats = new Stats();
 var currentScore = 0;
 var highScore = 0;
 
-var speedX = 0.05;
-var edgeState = 1;
+
 
 var falconAtlas: createjs.SpriteSheet;
 var falconState;
-
+//Start
+//Kick
+//Knee
+//Hit
 var clickDelay = 0;
 var kneeDuration = -1;
 var recoveryDelay = -1;
+
+
+
+var milesAtlas: createjs.SpriteSheet;
+var milesState;
+//Start
+//Idle
+//Pew
+//PewPew
+//PewSpray
+//RingForce
+//Hit
+var milesTimer = 0;
+
 
 // Game State Variables
 var currentState: number;
@@ -60,11 +72,6 @@ var manifest = [
     { id: "cloud", src: "assets/images/cloud.png" },
     { id: "island", src: "assets/images/island.png" },
     { id: "ocean", src: "assets/images/space.jpg" },
-    { id: "knee", src: "assets/images/knee.fw.png" },
-    { id: "edgeNeutral", src: "assets/images/edgeNeutral.fw.png" },
-    { id: "edgePew", src: "assets/images/edgePew.fw.png" },
-    { id: "edgeHit1", src: "assets/images/edgeHit1.fw.png" },
-    { id: "edgeHit2", src: "assets/images/edgeHit2.fw.png" },
     { id: "ringBullet", src: "assets/images/ringBullet.fw.png" },
     { id: "playButton", src: "assets/images/startbutton.png" },
     { id: "tryAgainButton", src: "assets/images/startbutton.png" },
@@ -108,35 +115,35 @@ var fAtlas = {
     ],
     "animations": {
 
-        "falconStand": [0],
-        "falconKnee2": [1],
-        "falconKnee3": [2],
-        "falconKnee4": [3],
-        "falconKnee5": [4],
-        "falconKick1": [5],
-        "falconKick2": [6],
-        "falconKick3": [7],
-        "falconKick4": [8],
-        "falconKick5": [9],
-        "falconKick6": [10],
-        "falconKick7": [11],
-        "falconKnee1": [12],
+        "FalconStand": [0],
+        "FalconKnee2": [1],
+        "FalconKnee3": [2],
+        "FalconKnee4": [3],
+        "FalconKnee5": [4],
+        "FalconKick1": [5],
+        "FalconKick2": [6],
+        "FalconKick3": [7],
+        "FalconKick4": [8],
+        "FalconKick5": [9],
+        "FalconKick6": [10],
+        "FalconKick7": [11],
+        "FalconKnee1": [12],
 
         "FalconKick": {
             frames: [0, 5, 6, 7, 8, 9, 10, 11],
-            next: "falconKick7",
+            next: "FalconKick7",
             speed: 0.75
         },
 
         "KickToKnee": {
             frames: [10, 9, 12, 1, 2, 3],
-            next: "falconKnee5",
+            next: "FalconKnee5",
             speed: 0.75
         },
 
         "KneeToKick": {
             frames: [3, 2, 9, 10],
-            next: "falconKick7",
+            next: "FalconKick7",
             speed: 0.5
         }
     }
@@ -166,7 +173,19 @@ var mAtlas = {
         "MilesHit3": [5],
         "MilesNeutral": [6],
         "MilesPew": [7],
-        "MilesRestart": [8]
+        "MilesRestart": [8],
+
+        "Kneed1": {
+            frames: [3, 4],
+            speed: 0.075,
+            next: "Kneed2"
+        },
+
+        "Kneed2": {
+            frames: [5, 8],
+            speed: 0.025,
+            next: "MilesRestart"
+        }
     }
 }
 
@@ -179,6 +198,7 @@ function Preload() {
     assetLoader.loadManifest(manifest);
 
     falconAtlas = new createjs.SpriteSheet(fAtlas);
+    milesAtlas = new createjs.SpriteSheet(mAtlas);
 }
 
 

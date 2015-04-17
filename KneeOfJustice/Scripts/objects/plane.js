@@ -32,8 +32,6 @@ var objects;
             if (this.y < stage.mouseY) {
                 this.y += 5;
             }
-            this.x += speedX;
-            speedX += 0.025;
             //test
         };
         return Plane;

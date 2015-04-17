@@ -34,9 +34,6 @@ module objects {
                 this.y += 5;
             }
 
-            this.x += speedX;
-            speedX += 0.025;
-
 
 
             //test

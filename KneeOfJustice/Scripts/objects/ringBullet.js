@@ -14,31 +14,30 @@ var objects;
             _super.call(this, assetLoader.getResult("ringBullet"));
             this.active = false;
             this.ySpeed = 0;
+            this.state = "";
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
-            createjs.Sound.play("laser", { loop: 1 });
+            this.regX = this.width * 0.5;
+            this.regY = this.height * 0.5;
             //Spawn Point
-            this.x = 1175;
-            this.y = 265;
+            this.x = 1006;
+            this.y = 3000;
         }
         // PUBLIC METHODS
         RingBullet.prototype.update = function () {
             if (this.active) {
-                this.x -= 15;
-                this.y += this.ySpeed;
-                this.x -= 5;
+                this.x -= 10;
             }
-            if (this.x < -100) {
-                //this.active = false;
-                this.reset();
+            if (this.x < -50) {
+                this.active = false;
             }
         };
         // Reset position of island to the top
-        RingBullet.prototype.reset = function () {
-            this.x = 1175;
-            this.y = 265;
-            //this.ySpeed = Math.floor(Math.random() * 1 + 1);
-            console.log(this.ySpeed);
+        RingBullet.prototype.spawn = function () {
+            createjs.Sound.play("laser", { loop: 1 });
+            //Respawn
+            this.x = 1006;
+            this.y = 300;
         };
         return RingBullet;
     })(createjs.Bitmap);

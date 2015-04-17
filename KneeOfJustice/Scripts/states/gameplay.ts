@@ -8,6 +8,7 @@
 /// <reference path="../objects/label.ts" />
 
 /// <reference path="../objects/falcon.ts" />
+/// <reference path="../objects/miles.ts" />
 
 module states {
 
@@ -15,65 +16,45 @@ module states {
         // Game Objects 
         public game: createjs.Container;
         public scoreboard: objects.ScoreBoard;
-        public plane: objects.Plane;
-        public island: objects.Island
-        public clouds: objects.Cloud[] = [];
         public ocean: objects.Ocean;
-        public edgeNeutral: objects.EdgeNeutral;
-        public edgePew: objects.EdgePew;
-        public edgeHit1: objects.EdgeHit1;
-        public edgeHit2: objects.EdgeHit2;
-        public ringBullet: objects.RingBullet;
 
+
+        public ringBullets: objects.RingBullet[] = [];
+
+        public miles: objects.Miles;
         public falcon: objects.Falcon;
+        
 
         constructor() {
             // Instantiate Game Container
             this.game = new createjs.Container();
 
 
+
+
             //Ocean object
             this.ocean = new objects.Ocean();
             this.game.addChild(this.ocean);
 
-            //Island object
-            this.island = new objects.Island();
-            //this.game.addChild(this.island);
 
-            this.edgeNeutral = new objects.EdgeNeutral();
-            this.game.addChild(this.edgeNeutral);
 
-            this.edgePew = new objects.EdgePew();
-            this.game.addChild(this.edgePew);
 
-            this.edgeHit1 = new objects.EdgeHit1();
-            this.game.addChild(this.edgeHit1);
-
-            this.edgeHit2 = new objects.EdgeHit2();
-            this.game.addChild(this.edgeHit2);
-
-            this.ringBullet = new objects.RingBullet();
-            this.game.addChild(this.ringBullet);
-
-            //Plane object
-            this.plane = new objects.Plane();
-            //this.game.addChild(this.plane);
-
-            
-
-            //Cloud object
-            for (var cloud = 2; cloud >= 0; cloud--) {
-                this.clouds[cloud] = new objects.Cloud();
-                //this.game.addChild(this.clouds[cloud]);
+            //Create Bullets
+            for (var bullets = 21; bullets >= 0; bullets--) {
+                this.ringBullets[bullets] = new objects.RingBullet();
+                this.game.addChild(this.ringBullets[bullets]);
             }
 
+            //Miles
+            this.miles = new objects.Miles();
+            this.game.addChild(this.miles);
 
-            // Instantiate Scoreboard
-            this.scoreboard = new objects.ScoreBoard(this.game);
-
+            //Falcon
             this.falcon = new objects.Falcon();
             this.game.addChild(this.falcon);
 
+            // Instantiate Scoreboard
+            this.scoreboard = new objects.ScoreBoard(this.game);
 
             // Add Game Container to Stage
             stage.addChild(this.game);
@@ -85,6 +66,8 @@ module states {
         return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
         } //Distance Method
 
+
+        /*
         // CHECK COLLISION METHOD
         public checkCollision(collider: objects.GameObject) {
             if (this.scoreboard.active) {
@@ -106,32 +89,14 @@ module states {
                 collider.isColliding = false;
             }
         }
-    } // checkCollision Method
+        }
+         */
+        
+        // checkCollision Method
 
         public update() {
 
             this.ocean.update();
-
-            this.island.update();
-
-            this.edgeNeutral.update();
-            this.edgePew.update();
-            this.edgeHit1.update();
-            this.edgeHit2.update();
-
-            this.ringBullet.update();
-
-            this.plane.update();
-
-
-            for (var cloud = 2; cloud >= 0; cloud--) {
-                this.clouds[cloud].update();
-
-                this.checkCollision(this.clouds[cloud]);
-            }
-
-            this.checkCollision(this.island);
-
 
             this.scoreboard.update();
 
@@ -148,7 +113,46 @@ module states {
                 stateChanged = true;
             }
 
+
+
+
+
+
+
+
+
+
+            for (var bullets = 21; bullets >= 0; bullets--) {
+                this.ringBullets[bullets].update();
+
+                //Check Collision
+            }
+
+
+            this.miles.update();
             this.falcon.update();
+
+
+            //Game Start
+            if (gamePlay.falcon.currentFrame == 11 && !gamePlay.falcon.active) {
+                gamePlay.falcon.active = true;
+                milesState = "Idle";
+                milesTimer = 60;
+            }
+
+            if (milesTimer > 0) {
+                milesTimer--;
+            }
+
+            if (milesTimer == 0 && milesState == "Idle") {
+                milesState = "Pew";
+                gamePlay.miles.gotoAndPlay("MilesPew");
+                milesTimer = -1;
+            }
+
+
+            console.log("MilesTimer: " + milesTimer);
+
 
             //Handle all of the 'click' related stuff
             stage.addEventListener("click", handleClick);
@@ -160,7 +164,6 @@ module states {
                 if (falconState == "Start") {
                     gamePlay.falcon.gotoAndPlay("FalconKick");
                     falconState = "Kick";
-                    gamePlay.plane.gotoAndPlay("FalconKick");
 
                     clickDelay = 5;
                 }
@@ -173,14 +176,6 @@ module states {
                     kneeDuration = 30;
                     clickDelay = 70;
                 }
-                
-            }
-            
-
-            //The Cap'n is in motion
-            if (gamePlay.falcon.currentFrame == 11) {
-                gamePlay.falcon.active = true;
-                gamePlay.ringBullet.active = true;
             }
 
             //CD on Knee && Knee > Kick
@@ -194,7 +189,7 @@ module states {
             }
 
             if (kneeDuration == -1 && clickDelay == 0) {
-                console.log("KNEE IS READY");
+                //console.log("KNEE IS READY");
             }
 
             //Delay Clicks > Kill Spam
@@ -203,10 +198,10 @@ module states {
             }
             
 
-            //console.log(clickDelay);
-            //console.log(falconState);
 
 
+
+            /*
             //Collision Test
             var distance = Math.sqrt(
                 (this.falcon.x - this.ringBullet.x) * (this.falcon.x - this.ringBullet.x) +
@@ -220,7 +215,7 @@ module states {
             if (distance < 50 && this.falcon.currentFrame != 4) {
                 console.log("You Got Hit");
                 falconState = "Hit";
-                this.falcon.gotoAndPlay("falconKnee1");
+                this.falcon.gotoAndPlay("FalconKnee1");
                 recoveryDelay = 20;
             }
 
@@ -232,6 +227,8 @@ module states {
                 this.falcon.gotoAndPlay("FalconKick");
                 falconState = "Kick";
             }
+            */
+
 
 
 
