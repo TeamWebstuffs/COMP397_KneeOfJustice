@@ -59,10 +59,13 @@ var milesState;
 //PewSpray
 //RingForce
 //Hit
+//SPAZMODE
+//End
 var milesTimer = 0;
 var milesCombo = 1;
 var pewDuration = 0;
 var milesHp = 0;
+var meteoCD = 0;
 
 
 // Game State Variables
@@ -199,7 +202,26 @@ var mAtlas = {
             frames: [8, 6, 6],
             speed: 0.025,
             next: "MilesNeutral"
+        },
+
+        "MilesSpaz": {
+            frames: [7, 8, 1, 4],
+            next: "MilesSpaz2",
+            speed: 0.5
+        },
+
+        "MilesSpaz2": {
+            frames: [5, 3, 2, 6, 1],
+            next: "MilesSpaz",
+            speed: 0.5
+        },
+
+        "End": {
+            frames: [0, 1, 2],
+            speed: 0.05,
+            next: "MilesEnd3"
         }
+
     }
 }
 

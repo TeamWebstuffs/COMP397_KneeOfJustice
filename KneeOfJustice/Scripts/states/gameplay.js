@@ -158,6 +158,30 @@ var states;
                 }
                 milesState = "PewCD";
             }
+            //Pew Lv3
+            if (milesState == "SPAZMODE" && meteoCD == 0 && level == 3) {
+                var shootCount = 0;
+                for (var bullets = 21; bullets >= 0; bullets--) {
+                    if (this.ringBullets[bullets].active == false) {
+                        this.ringBullets[bullets].active = true;
+                        this.ringBullets[bullets].meteo = true;
+                        this.ringBullets[bullets].meteoX = (Math.floor((Math.random() * 10) + 5));
+                        this.ringBullets[bullets].meteoY = (Math.floor((Math.random() * 7) + 1));
+                        this.ringBullets[bullets].x = (Math.floor((Math.random() * 2000) + 1500));
+                        this.ringBullets[bullets].y = -100;
+                        shootCount++;
+                    }
+                    //Only Shoot 1 Bullet
+                    if (shootCount == 1) {
+                        break;
+                    }
+                }
+                //Shooting Finished
+                meteoCD = (Math.floor((Math.random() * 10) + 5));
+            }
+            if (meteoCD > 0) {
+                meteoCD--;
+            }
             //Return Miles back to Neutral
             if (pewDuration > 0) {
                 pewDuration--;
@@ -214,17 +238,20 @@ var states;
             for (var bullets = 21; bullets >= 0; bullets--) {
                 this.ringBullets[bullets].update();
                 //Falcon Kick and Ring
-                if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX && gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY && falconState == "Kick") {
+                if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX && gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY && falconState == "Kick" && gamePlay.falcon.active) {
                     falconState = "Hit";
                     this.falcon.gotoAndPlay("FalconKnee1");
                     recoveryDelay = 20;
+                    this.scoreboard.lives--;
                 }
                 //Falcon Knee and Ring
                 if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX && gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY && falconState == "Knee") {
                     //Ring Reflected
+                    this.ringBullets[bullets].meteo = false;
                     this.ringBullets[bullets].reflect = true;
+                    this.scoreboard.score += 100;
                 }
-                //Miles and Ring
+                //Miles and Ring Lv1
                 if (gamePlay.miles.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.miles.hitX + gamePlay.miles.hitW > this.ringBullets[bullets].hitX && gamePlay.miles.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.miles.hitH + gamePlay.miles.hitY > this.ringBullets[bullets].hitY && this.ringBullets[bullets].reflect && milesState != "Hit" && level == 1) {
                     //Miles got Ringed
                     milesState = "Hit";
@@ -232,6 +259,30 @@ var states;
                     this.ringBullets[bullets].reflect = false;
                     this.ringBullets[bullets].active = false;
                     this.ringBullets[bullets].x = -100;
+                }
+                //Miles and Ring Lv2
+                if (gamePlay.miles.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.miles.hitX + gamePlay.miles.hitW > this.ringBullets[bullets].hitX && gamePlay.miles.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.miles.hitH + gamePlay.miles.hitY > this.ringBullets[bullets].hitY && this.ringBullets[bullets].reflect && level == 2) {
+                    //Miles got Ringed
+                    this.ringBullets[bullets].reflect = false;
+                    this.ringBullets[bullets].active = false;
+                    this.ringBullets[bullets].x = -100;
+                    milesHp--;
+                    if (milesHp <= 0) {
+                        milesState = "Hit";
+                        gamePlay.miles.gotoAndPlay("Kneed1");
+                    }
+                }
+                //Miles and Ring Lv3
+                if (gamePlay.miles.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW && gamePlay.miles.hitX + gamePlay.miles.hitW > this.ringBullets[bullets].hitX && gamePlay.miles.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH && gamePlay.miles.hitH + gamePlay.miles.hitY > this.ringBullets[bullets].hitY && this.ringBullets[bullets].reflect && level == 3) {
+                    //Miles got Ringed
+                    this.ringBullets[bullets].reflect = false;
+                    this.ringBullets[bullets].active = false;
+                    this.ringBullets[bullets].x = -100;
+                    milesHp--;
+                    if (milesHp <= 0) {
+                        milesState = "Hit";
+                        gamePlay.miles.gotoAndPlay("Kneed1");
+                    }
                 }
             }
             //Falcon Recovery
@@ -251,6 +302,24 @@ var states;
                 milesCombo = 1;
                 milesState = "Idle";
                 milesTimer = 30;
+            }
+            //Stage 3 Start
+            if (milesState == "Hit" && gamePlay.miles.currentFrame == 6 && level == 2) {
+                console.log("STAGE 3");
+                level = 3;
+                milesHp = 10;
+                milesCombo = 1;
+                milesState = "SPAZMODE";
+                gamePlay.miles.gotoAndPlay("MilesSpaz");
+                milesTimer = 30;
+            }
+            //END
+            if (milesState == "Hit" && gamePlay.miles.currentFrame == 6 && level == 3) {
+                console.log("END");
+                level = 4;
+                milesState = "End";
+                gamePlay.miles.gotoAndPlay("End");
+                gamePlay.falcon.active = false;
             }
             stage.update(); // Refreshes our stage
         }; // Update Method

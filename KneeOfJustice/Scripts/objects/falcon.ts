@@ -41,11 +41,28 @@ module objects {
 
 
             //
-            if (this.active && this.y > stage.mouseY) {
-                this.y -= 10;
-            }
-            if (this.active && this.y < stage.mouseY) {
-                this.y += 10;
+            if (level != 3) {
+                if (this.active && this.y > stage.mouseY) {
+                    this.y -= 10;
+                }
+                if (this.active && this.y < stage.mouseY) {
+                    this.y += 10;
+                }
+            } else {
+                if (this.active && this.y > stage.mouseY) {
+                    this.y -= 10;
+                }
+                if (this.active && this.y < stage.mouseY) {
+                    this.y += 10;
+                }
+                if (this.active && this.x > stage.mouseX) {
+                    this.x -= 10;
+                }
+                if (this.active && this.x < stage.mouseX && this.x < 750) {
+                    this.x += 10;
+                }
+
+
             }
 
         }

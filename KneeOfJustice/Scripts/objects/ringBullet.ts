@@ -7,6 +7,9 @@ module objects {
 
         public active = false;
         public reflect = false;
+        public meteo = false;
+        public meteoX;
+        public meteoY;
         public ySpeed = 0;
         public state = "";
 
@@ -38,16 +41,20 @@ module objects {
             this.hitX = this.x - 27;
             this.hitY = this.y - 27;
 
-            if (this.active && !this.reflect) {
+            if (this.active && !this.reflect && !this.meteo) {
                 this.x -= 10;
                 this.y += this.ySpeed;
             }
-            if (this.active && this.reflect) {
+            if (this.active && this.reflect && !this.meteo) {
                 this.x += 10;
             }
 
+            if (this.active && this.meteo) {
+                this.x -= this.meteoX;
+                this.y += this.meteoY;
+            }
 
-            if (this.x < -50) {
+            if (this.x < -50 || this.y > 550) {
                 this.active = false;
             }
 

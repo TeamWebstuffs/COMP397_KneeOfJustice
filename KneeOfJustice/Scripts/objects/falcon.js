@@ -33,11 +33,27 @@ var objects;
             this.hitX = this.x - 62;
             this.hitY = this.y - 35;
             //
-            if (this.active && this.y > stage.mouseY) {
-                this.y -= 10;
+            if (level != 3) {
+                if (this.active && this.y > stage.mouseY) {
+                    this.y -= 10;
+                }
+                if (this.active && this.y < stage.mouseY) {
+                    this.y += 10;
+                }
             }
-            if (this.active && this.y < stage.mouseY) {
-                this.y += 10;
+            else {
+                if (this.active && this.y > stage.mouseY) {
+                    this.y -= 10;
+                }
+                if (this.active && this.y < stage.mouseY) {
+                    this.y += 10;
+                }
+                if (this.active && this.x > stage.mouseX) {
+                    this.x -= 10;
+                }
+                if (this.active && this.x < stage.mouseX && this.x < 750) {
+                    this.x += 10;
+                }
             }
         };
         return Falcon;

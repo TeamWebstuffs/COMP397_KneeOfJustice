@@ -14,6 +14,7 @@ var objects;
             _super.call(this, assetLoader.getResult("ringBullet"));
             this.active = false;
             this.reflect = false;
+            this.meteo = false;
             this.ySpeed = 0;
             this.state = "";
             this.width = this.getBounds().width;
@@ -31,14 +32,18 @@ var objects;
             //Update Hitbox
             this.hitX = this.x - 27;
             this.hitY = this.y - 27;
-            if (this.active && !this.reflect) {
+            if (this.active && !this.reflect && !this.meteo) {
                 this.x -= 10;
                 this.y += this.ySpeed;
             }
-            if (this.active && this.reflect) {
+            if (this.active && this.reflect && !this.meteo) {
                 this.x += 10;
             }
-            if (this.x < -50) {
+            if (this.active && this.meteo) {
+                this.x -= this.meteoX;
+                this.y += this.meteoY;
+            }
+            if (this.x < -50 || this.y > 550) {
                 this.active = false;
             }
         };
