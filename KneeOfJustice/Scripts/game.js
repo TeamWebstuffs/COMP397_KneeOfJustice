@@ -66,7 +66,7 @@ var menu;
 var manifest = [
     { id: "cloud", src: "assets/images/cloud.png" },
     { id: "island", src: "assets/images/island.png" },
-    { id: "ocean", src: "assets/images/space.jpg" },
+    { id: "ocean", src: "assets/images/Nebula2.fw.png" },
     { id: "ringBullet", src: "assets/images/ringBullet.fw.png" },
     { id: "playButton", src: "assets/images/startbutton.png" },
     { id: "tryAgainButton", src: "assets/images/startbutton.png" },
@@ -212,8 +212,8 @@ function setupStats() {
     stats.setMode(0);
     // align top-left
     stats.domElement.style.position = 'absolute';
-    stats.domElement.style.left = '650px';
-    stats.domElement.style.top = '440px';
+    stats.domElement.style.left = '1550px';
+    stats.domElement.style.top = '50px';
     document.body.appendChild(stats.domElement);
 }
 function gameLoop() {

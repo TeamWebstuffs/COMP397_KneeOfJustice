@@ -37,31 +37,6 @@ var states;
         GamePlay.prototype.distance = function (p1, p2) {
             return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
         }; //Distance Method
-        /*
-        // CHECK COLLISION METHOD
-        public checkCollision(collider: objects.GameObject) {
-            if (this.scoreboard.active) {
-                var planePosition: createjs.Point = new createjs.Point(this.plane.x, this.plane.y);
-            var objectPosition: createjs.Point = new createjs.Point(collider.x, collider.y);
-            var theDistance = this.distance(planePosition, objectPosition);
-            if (theDistance < ((this.plane.height * 0.5) + (collider.height * 0.5))) {
-                if (collider.isColliding != true) {
-                    createjs.Sound.play(collider.sound);
-                    if (collider.name == "cloud") {
-                        this.scoreboard.lives--;
-                    }
-                    if (collider.name == "island") {
-                        this.scoreboard.score += 100;
-                    }
-                }
-                collider.isColliding = true;
-            } else {
-                collider.isColliding = false;
-            }
-        }
-        }
-         */
-        // checkCollision Method
         GamePlay.prototype.update = function () {
             this.ocean.update();
             this.scoreboard.update();

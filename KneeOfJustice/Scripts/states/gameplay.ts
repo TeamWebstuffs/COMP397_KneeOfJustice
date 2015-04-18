@@ -18,9 +18,7 @@ module states {
         public scoreboard: objects.ScoreBoard;
         public ocean: objects.Ocean;
 
-
         public ringBullets: objects.RingBullet[] = [];
-
         public miles: objects.Miles;
         public falcon: objects.Falcon;
         
@@ -29,15 +27,9 @@ module states {
             // Instantiate Game Container
             this.game = new createjs.Container();
 
-
-
-
             //Ocean object
             this.ocean = new objects.Ocean();
             this.game.addChild(this.ocean);
-
-
-
 
             //Create Bullets
             for (var bullets = 21; bullets >= 0; bullets--) {
@@ -66,34 +58,6 @@ module states {
         return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
         } //Distance Method
 
-
-        /*
-        // CHECK COLLISION METHOD
-        public checkCollision(collider: objects.GameObject) {
-            if (this.scoreboard.active) {
-                var planePosition: createjs.Point = new createjs.Point(this.plane.x, this.plane.y);
-            var objectPosition: createjs.Point = new createjs.Point(collider.x, collider.y);
-            var theDistance = this.distance(planePosition, objectPosition);
-            if (theDistance < ((this.plane.height * 0.5) + (collider.height * 0.5))) {
-                if (collider.isColliding != true) {
-                    createjs.Sound.play(collider.sound);
-                    if (collider.name == "cloud") {
-                        this.scoreboard.lives--;
-                    }
-                    if (collider.name == "island") {
-                        this.scoreboard.score += 100;
-                    }
-                }
-                collider.isColliding = true;
-            } else {
-                collider.isColliding = false;
-            }
-        }
-        }
-         */
-        
-        // checkCollision Method
-
         public update() {
 
             this.ocean.update();
@@ -113,20 +77,8 @@ module states {
                 stateChanged = true;
             }
 
-
-
-
-
-
-
-
-
-
-
-
             this.miles.update();
             this.falcon.update();
-
 
             //Game Start
             if (gamePlay.falcon.currentFrame == 11 && !gamePlay.falcon.active) {
@@ -246,8 +198,6 @@ module states {
                 meteoCD--;
             }
 
-
-
             //Return Miles back to Neutral
             if (pewDuration > 0) {
                 pewDuration--;
@@ -267,17 +217,6 @@ module states {
                     milesCombo = 1;
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
 
             //Handle all of the 'click' related stuff
             stage.addEventListener("click", handleClick);
@@ -321,8 +260,6 @@ module states {
                 clickDelay--;
             }
             
-            
-
 
             //Collision Stuff
 

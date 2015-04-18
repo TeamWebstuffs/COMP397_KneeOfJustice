@@ -28,7 +28,7 @@
         // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++
         private _checkBounds() {
             // check if island has left the bottom of the screen
-            if (this.x === -50) {
+            if (this.x === -1500) {
                 this.reset();
             }
         }
