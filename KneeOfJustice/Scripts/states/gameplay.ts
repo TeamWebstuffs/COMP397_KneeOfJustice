@@ -131,61 +131,115 @@ module states {
             //Game Start
             if (gamePlay.falcon.currentFrame == 11 && !gamePlay.falcon.active) {
                 gamePlay.falcon.active = true;
+                //Start Miles lv1 AI Cycle
                 milesState = "Idle";
                 milesTimer = 60;
             }
 
+            //M2Pew
             if (milesTimer > 0) {
                 milesTimer--;
             }
-
             if (milesTimer == 0 && milesState == "Idle") {
                 gamePlay.miles.gotoAndPlay("MilesPew");
                 milesState = "Pew";               
                 milesTimer = -1;
             }
 
-            if (milesState == "Pew" && gamePlay.falcon.active) {
+            //Pew Lv1
+            if (milesState == "Pew" && level == 1) {
                 milesState = "Pewing";
                 pewDuration = 30;
-
                 var shootCount = 0;
 
-                
                 for (var bullets = 21; bullets >= 0; bullets--) {
                     if (this.ringBullets[bullets].active == false) {
                         this.ringBullets[bullets].active = true;
-                        this.ringBullets[bullets].spawn();
-
                         this.ringBullets[bullets].ySpeed =
                         (Math.random() < 0.5 ? -1 : 1) * (Math.floor((Math.random() * 3) + 0));
-
+                        this.ringBullets[bullets].spawn();
                         shootCount++;
                     }
-
                     //Only Shoot 1 Bullet
                     if (shootCount == 1) {
-                        //console.log("BREAK");
                         break;
                     }
-                    //console.log("shoot: " + shootCount);
                 }
-                
+                //Shooting Finished
                 milesState = "PewCD";
             }
 
+            //Pew Lv2
+            if (milesState == "Pew" && level == 2) {
+
+                milesState = "Pewing";
+                switch (milesCombo) {
+                    case 1:
+                        pewDuration = 10;
+                        break;
+                    case 2:
+                        pewDuration = 10;
+                        break;
+                    case 3:
+                        pewDuration = 10;
+                        break;
+                    default:
+                        break;
+                }
+
+                var shootCount = 0;
+                for (var bullets = 21; bullets >= 0; bullets--) {
+                    if (this.ringBullets[bullets].active == false) {
+                        this.ringBullets[bullets].active = true;
+                        if (milesCombo == 2) {
+                            this.ringBullets[bullets].ySpeed = shootCount;
+                        } else {
+                            this.ringBullets[bullets].ySpeed = -shootCount;
+                        }
+                        this.ringBullets[bullets].spawn();
+                        shootCount++;
+                    }
+                    //
+                    if (shootCount == 3) {
+                        break;
+                    }
+                }
+                //Shooting Finished
+                if (milesCombo < 3) {
+                    milesCombo++;
+                } else if (milesCombo == 3) {
+                    milesCombo = -1;
+                }
+                milesState = "PewCD";
+            }
+
+            //Return Miles back to Neutral
             if (pewDuration > 0) {
                 pewDuration--;
             }
-
             if (milesState == "PewCD" && pewDuration == 0) {
                 gamePlay.miles.gotoAndPlay("MilesNeutral");
                 milesState = "Idle";
-                milesTimer = Math.floor((Math.random() * 70) + 40);
+
+                if (level == 1) {
+                    milesTimer = Math.floor((Math.random() * 70) + 40);
+                }
+                if (level == 2 && milesCombo <= 3) {
+                    milesTimer = 40;
+                }
+                if (level == 2 && milesCombo == -1) {
+                    milesTimer = 140;
+                    milesCombo = 1;
+                }
             }
 
 
-            //console.log("> " + pewDuration);
+
+
+
+
+
+
 
 
 
@@ -232,11 +286,7 @@ module states {
                 clickDelay--;
             }
             
-            //Stage 2 Start
-            if (milesState == "Hit" && gamePlay.miles.currentFrame == 6){
-                console.log("STAGE 2");
-            }
-
+            
 
 
             //Collision Stuff
@@ -274,11 +324,14 @@ module states {
                     gamePlay.miles.hitX + gamePlay.miles.hitW > this.ringBullets[bullets].hitX &&
                     gamePlay.miles.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH &&
                     gamePlay.miles.hitH + gamePlay.miles.hitY > this.ringBullets[bullets].hitY &&
-                    this.ringBullets[bullets].reflect && milesState != "Hit"
+                    this.ringBullets[bullets].reflect && milesState != "Hit" && level == 1
                     ) {
                     //Miles got Ringed
                     milesState = "Hit";
                     gamePlay.miles.gotoAndPlay("Kneed1");
+                    this.ringBullets[bullets].reflect = false;
+                    this.ringBullets[bullets].active = false;
+                    this.ringBullets[bullets].x = -100;
                 }
 
             }
@@ -291,6 +344,16 @@ module states {
                 recoveryDelay = -1;
                 this.falcon.gotoAndPlay("FalconKick");
                 falconState = "Kick";
+            }
+
+            //Stage 2 Start
+            if (milesState == "Hit" && gamePlay.miles.currentFrame == 6 && level == 1) {
+                console.log("STAGE 2");
+                level = 2;
+                milesHp = 5;
+                milesCombo = 1;
+                milesState = "Idle";
+                milesTimer = 30;
             }
 
 

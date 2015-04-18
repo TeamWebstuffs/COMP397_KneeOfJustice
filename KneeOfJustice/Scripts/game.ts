@@ -60,8 +60,9 @@ var milesState;
 //RingForce
 //Hit
 var milesTimer = 0;
-var milesCombo = 0;
+var milesCombo = 1;
 var pewDuration = 0;
+var milesHp = 0;
 
 
 // Game State Variables
