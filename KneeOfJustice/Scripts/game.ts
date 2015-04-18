@@ -82,6 +82,7 @@ var manifest = [
     { id: "island", src: "assets/images/island.png" },
     { id: "ocean", src: "assets/images/Nebula2.fw.png" },
     { id: "ringBullet", src: "assets/images/ringBullet.fw.png" },
+    { id: "platform", src: "assets/images/Platform.fw.png" },
     { id: "playButton", src: "assets/images/startbutton.png" },
     { id: "tryAgainButton", src: "assets/images/startbutton.png" },
     { id: "engine", src: "assets/audio/engine.ogg" },

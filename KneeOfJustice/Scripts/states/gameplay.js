@@ -22,6 +22,9 @@ var states;
                 this.ringBullets[bullets] = new objects.RingBullet();
                 this.game.addChild(this.ringBullets[bullets]);
             }
+            //Platform
+            this.platform = new objects.Platform();
+            this.game.addChild(this.platform);
             //Miles
             this.miles = new objects.Miles();
             this.game.addChild(this.miles);
@@ -52,6 +55,7 @@ var states;
                 currentState = constants.GAME_OVER_STATE;
                 stateChanged = true;
             }
+            this.platform.update();
             this.miles.update();
             this.falcon.update();
             //Game Start
@@ -60,6 +64,7 @@ var states;
                 //Start Miles lv1 AI Cycle
                 milesState = "Idle";
                 milesTimer = 60;
+                this.platform.start = true;
             }
             //M2Pew
             if (milesTimer > 0) {
@@ -295,6 +300,20 @@ var states;
                 milesState = "End";
                 gamePlay.miles.gotoAndPlay("End");
                 gamePlay.falcon.active = false;
+                milesTimer = 60;
+            }
+            if (milesTimer == 0 && milesState == "End") {
+                //GAME OVER
+                this.scoreboard.active = false;
+                createjs.Sound.stop();
+                currentScore = this.scoreboard.score;
+                if (currentScore > highScore) {
+                    highScore = currentScore;
+                }
+                this.game.removeAllChildren();
+                stage.removeChild(this.game);
+                currentState = constants.GAME_OVER_STATE;
+                stateChanged = true;
             }
             stage.update(); // Refreshes our stage
         }; // Update Method

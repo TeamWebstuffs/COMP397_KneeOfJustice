@@ -21,7 +21,7 @@ module states {
         public ringBullets: objects.RingBullet[] = [];
         public miles: objects.Miles;
         public falcon: objects.Falcon;
-        
+        public platform: objects.Platform;
 
         constructor() {
             // Instantiate Game Container
@@ -36,6 +36,10 @@ module states {
                 this.ringBullets[bullets] = new objects.RingBullet();
                 this.game.addChild(this.ringBullets[bullets]);
             }
+
+            //Platform
+            this.platform = new objects.Platform();
+            this.game.addChild(this.platform);
 
             //Miles
             this.miles = new objects.Miles();
@@ -77,6 +81,8 @@ module states {
                 stateChanged = true;
             }
 
+            this.platform.update();
+
             this.miles.update();
             this.falcon.update();
 
@@ -86,6 +92,7 @@ module states {
                 //Start Miles lv1 AI Cycle
                 milesState = "Idle";
                 milesTimer = 60;
+                this.platform.start = true;
             }
 
             //M2Pew
@@ -387,8 +394,22 @@ module states {
                 milesState = "End";
                 gamePlay.miles.gotoAndPlay("End");
                 gamePlay.falcon.active = false;
+                milesTimer = 60;
             }
 
+            if (milesTimer == 0 && milesState == "End") {
+                //GAME OVER
+                this.scoreboard.active = false;
+                createjs.Sound.stop();
+                currentScore = this.scoreboard.score;
+                if (currentScore > highScore) {
+                    highScore = currentScore;
+                }
+                this.game.removeAllChildren();
+                stage.removeChild(this.game);
+                currentState = constants.GAME_OVER_STATE;
+                stateChanged = true;
+            }
 
             stage.update(); // Refreshes our stage
 

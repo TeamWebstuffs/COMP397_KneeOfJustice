@@ -160,6 +160,7 @@
     <TypeScriptCompile Include="Scripts\objects\miles.ts" />
     <TypeScriptCompile Include="Scripts\objects\ocean.ts" />
     <TypeScriptCompile Include="Scripts\objects\plane.ts" />
+    <TypeScriptCompile Include="Scripts\objects\platform.ts" />
     <TypeScriptCompile Include="Scripts\objects\ringBullet.ts" />
     <TypeScriptCompile Include="Scripts\objects\scoreboard.ts" />
     <TypeScriptCompile Include="Scripts\states\gameover.ts" />

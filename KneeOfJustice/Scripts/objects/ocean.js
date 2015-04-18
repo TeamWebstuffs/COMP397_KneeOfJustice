@@ -30,7 +30,7 @@ var objects;
         // PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++++
         Ocean.prototype._checkBounds = function () {
             // check if island has left the bottom of the screen
-            if (this.x === -1500) {
+            if (this.x == -1500) {
                 this.reset();
             }
         };

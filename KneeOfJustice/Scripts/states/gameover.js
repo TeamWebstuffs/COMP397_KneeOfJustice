@@ -1,9 +1,6 @@
 /// <reference path="../constants.ts" />
 /// <reference path="../objects/gameobject.ts" />
-/// <reference path="../objects/island.ts" />
 /// <reference path="../objects/ocean.ts" />
-/// <reference path="../objects/plane.ts" />
-/// <reference path="../objects/cloud.ts" />
 /// <reference path="../objects/button.ts" />
 /// <reference path="../objects/label.ts" />
 /// <reference path="../objects/scoreboard.ts" />
@@ -32,7 +29,7 @@ var states;
             this.highScoreLabel = new objects.Label(320, 200, ("Knee Points: " + highScore));
             this.game.addChild(this.highScoreLabel);
             //Try Again Button
-            this.tryAgainButton = new objects.Button(320, 280, "startbutton");
+            this.tryAgainButton = new objects.Button(320, 280, "playButton");
             this.tryAgainButton.on("click", this.tryAgainClicked, this);
             this.game.addChild(this.tryAgainButton);
             // Add Game Container to Stage

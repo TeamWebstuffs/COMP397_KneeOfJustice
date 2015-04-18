@@ -1,9 +1,6 @@
 ﻿/// <reference path="../constants.ts" />
 /// <reference path="../objects/gameobject.ts" />
-/// <reference path="../objects/island.ts" />
 /// <reference path="../objects/ocean.ts" />
-/// <reference path="../objects/plane.ts" />
-/// <reference path="../objects/cloud.ts" />
 /// <reference path="../objects/button.ts" />
 /// <reference path="../objects/label.ts" />
 
@@ -26,9 +23,7 @@ module states {
         constructor() {
             // Instantiate Game Container
             this.game = new createjs.Container();
-
             //Ocean object
-            
             this.ocean = new objects.Ocean();
             this.game.addChild(this.ocean);
 
@@ -48,7 +43,7 @@ module states {
             this.game.addChild(this.highScoreLabel);
 
             //Try Again Button
-            this.tryAgainButton = new objects.Button(320, 280, "startbutton");
+            this.tryAgainButton = new objects.Button(320, 280, "playButton");
             this.tryAgainButton.on("click", this.tryAgainClicked, this);
 
             this.game.addChild(this.tryAgainButton);
