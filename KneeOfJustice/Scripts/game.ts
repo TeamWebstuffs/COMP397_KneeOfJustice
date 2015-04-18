@@ -77,7 +77,7 @@ var menu: states.Menu;
 var manifest = [
     { id: "cloud", src: "assets/images/cloud.png" },
     { id: "island", src: "assets/images/island.png" },
-    { id: "ocean", src: "assets/images/space.jpg" },
+    { id: "ocean", src: "assets/images/nebularbg.png" },
     { id: "ringBullet", src: "assets/images/ringBullet.fw.png" },
     { id: "playButton", src: "assets/images/startbutton.png" },
     { id: "tryAgainButton", src: "assets/images/startbutton.png" },
