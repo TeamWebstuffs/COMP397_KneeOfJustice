@@ -27,6 +27,7 @@ module objects {
             this.y = 250;
 
             falconState = "Start";
+            level = 1;
 
             this.hitW = 125;
             this.hitH = 70;

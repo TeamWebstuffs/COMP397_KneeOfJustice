@@ -151,6 +151,7 @@ module states {
 
                 var shootCount = 0;
 
+                
                 for (var bullets = 21; bullets >= 0; bullets--) {
                     if (this.ringBullets[bullets].active == false) {
                         this.ringBullets[bullets].active = true;
@@ -164,10 +165,10 @@ module states {
 
                     //Only Shoot 1 Bullet
                     if (shootCount == 1) {
-                        console.log("BREAK");
+                        //console.log("BREAK");
                         break;
                     }
-                    console.log("shoot: " + shootCount);
+                    //console.log("shoot: " + shootCount);
                 }
                 
                 milesState = "PewCD";
@@ -222,49 +223,29 @@ module states {
                 gamePlay.falcon.gotoAndPlay("KneeToKick");
                 kneeDuration = -1;
             }
-
-            if (kneeDuration == -1 && clickDelay == 0) {
-                //console.log("KNEE IS READY");
+            //Blue Falcon
+            if (kneeDuration == -1 && clickDelay == 0 && gamePlay.falcon.currentFrame == 11) {
+                gamePlay.falcon.gotoAndPlay("FalconKneeReady");
             }
-
             //Delay Clicks > Kill Spam
             if (clickDelay > 0) {
                 clickDelay--;
             }
             
-
+            //Stage 2 Start
+            if (milesState == "Hit" && gamePlay.miles.currentFrame == 6){
+                console.log("STAGE 2");
+            }
 
 
 
             //Collision Stuff
-            /*
-            var rect1 = { x: 5, y: 5, width: 50, height: 50 }
-            var rect2 = { x: 20, y: 10, width: 10, height: 10 }
 
-            if (rect1.x < rect2.x + rect2.width &&
-                rect1.x + rect1.width > rect2.x &&
-                rect1.y < rect2.y + rect2.height &&
-                rect1.height + rect1.y > rect2.y) {
-                // collision detected!
-            }
-
-            // filling in the values =>
-
-            if (5 < 30 &&
-                55 > 20 &&
-                5 < 20 &&
-                55 > 10) {
-                // collision detected!
-            }
-            */
-
-            
-
-            
+            //Bullets
             for (var bullets = 21; bullets >= 0; bullets--) {
                 this.ringBullets[bullets].update();
 
-                //Falcon and Ring
+                //Falcon Kick and Ring
                 if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW &&
                     gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX &&
                     gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH &&
@@ -272,13 +253,37 @@ module states {
                     falconState == "Kick"
                     )
                 {
-                    console.log("GET HIT");
                     falconState = "Hit";
                     this.falcon.gotoAndPlay("FalconKnee1");
                     recoveryDelay = 20;
                 }
+
+                //Falcon Knee and Ring
+                if (gamePlay.falcon.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW &&
+                    gamePlay.falcon.hitX + gamePlay.falcon.hitW > this.ringBullets[bullets].hitX &&
+                    gamePlay.falcon.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH &&
+                    gamePlay.falcon.hitH + gamePlay.falcon.hitY > this.ringBullets[bullets].hitY &&
+                    falconState == "Knee"
+                    ) {
+                    //Ring Reflected
+                    this.ringBullets[bullets].reflect = true;
+                }
+
+                //Miles and Ring
+                if (gamePlay.miles.hitX < this.ringBullets[bullets].hitX + this.ringBullets[bullets].hitW &&
+                    gamePlay.miles.hitX + gamePlay.miles.hitW > this.ringBullets[bullets].hitX &&
+                    gamePlay.miles.hitY < this.ringBullets[bullets].hitY + this.ringBullets[bullets].hitH &&
+                    gamePlay.miles.hitH + gamePlay.miles.hitY > this.ringBullets[bullets].hitY &&
+                    this.ringBullets[bullets].reflect && milesState != "Hit"
+                    ) {
+                    //Miles got Ringed
+                    milesState = "Hit";
+                    gamePlay.miles.gotoAndPlay("Kneed1");
+                }
+
             }
             
+            //Falcon Recovery
             if (recoveryDelay > 0) {
                 recoveryDelay--;
             }
